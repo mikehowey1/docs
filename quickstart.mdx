@@ -1,0 +1,136 @@
+---
+title: Quickstart
+description: Create your account, complete the setup wizard, install an agent on your network, and see your first miners in the dashboard — in about five minutes.
+---
+
+<Note>
+  You don't need a credit card to get started. New accounts on the Pay As You Go plan receive 200 MB of free data credits, which covers thousands of miner-minutes of telemetry.
+</Note>
+
+<Steps>
+
+<Step title="Create your account">
+
+Go to [dunedigital.xyz](https://dunedigital.xyz) and click **Get Started** or **Sign Up**.
+
+Fill in your full name, email address, and a password. Your password must be at least 8 characters and include both uppercase and lowercase letters plus at least one number.
+
+After you submit the form, Dune Digital sends a verification email to the address you provided. Open the email and click the confirmation link to activate your account.
+
+<Tip>
+  If you were invited to join an existing organization, use the link in the invitation email instead. It takes you directly to signup and links your account automatically.
+</Tip>
+
+</Step>
+
+<Step title="Choose your intent">
+
+After confirming your email and signing in, the onboarding wizard opens with a single question: **What brings you here?**
+
+Choose the option that best fits your current need:
+
+| Option | Best for | Starting price |
+|---|---|---|
+| **Pay As You Go** | Fleet monitoring — real-time telemetry, alerts, and automation for your miners | $0 + usage |
+| **Business** | Full platform access — advanced management, customer hosting, team collaboration, and all protocols | $149/mo + usage |
+
+Both options include access to the Marketplace. You can upgrade from Pay As You Go to Business at any time.
+
+</Step>
+
+<Step title="Complete your profile">
+
+Enter your first name, last name, and optionally your company name and phone number. This information is used for your account and organization settings. Your email address is pre-filled and cannot be changed on this screen.
+
+Click **Continue** to move to the next step.
+
+</Step>
+
+<Step title="Create your organization">
+
+Every Dune Digital account belongs to an organization. Organizations are how you group sites, miners, team members, and customers.
+
+Enter:
+- **Organization name** — the name of your company or operation (e.g., `Acme Mining Co.`)
+- **Description** (optional) — a brief note about what this organization manages
+- **Billing email** (optional) — where invoices and billing alerts are sent; defaults to your account email
+
+Click **Continue**. Dune Digital creates the organization and makes you its owner.
+
+<Tip>
+  If you were invited to an existing organization via an invite link, this step is skipped automatically — your account is already linked.
+</Tip>
+
+</Step>
+
+<Step title="Install the agent">
+
+The Dune Digital agent is a lightweight process you run on a machine inside the same network as your miners. It scans the local network, discovers miners automatically, and streams telemetry to the platform.
+
+**Select your product and platform:**
+
+- **Product** — choose **Hash Streams** for Bitcoin ASIC miners or **AI Streams** for GPU compute
+- **Platform** — Linux, macOS, or Windows
+
+The wizard generates a one-time **registration code** that expires after a few minutes and ties the agent to your site. Copy the install command and run it on the target machine.
+
+<Tabs>
+  <Tab title="Linux / macOS">
+    Run the following in your terminal:
+
+    ```bash
+    curl -sSL <install-url> | bash -s -- --code <YOUR_CODE>
+    ```
+
+    The installer script downloads and starts the agent, then registers it with your site using the code.
+  </Tab>
+  <Tab title="Windows">
+    Run the following in PowerShell as Administrator:
+
+    ```powershell
+    powershell -Command "& { iex (irm <install-url>/windows) } --code <YOUR_CODE>"
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+  The registration code is single-use and time-limited. If it expires before you run the installer, click **Generate New Code** in the wizard to get a fresh one.
+</Warning>
+
+Once the agent starts, click **Verify Connection** in the wizard. Dune Digital polls for an active agent heartbeat. When it detects one, the step completes automatically.
+
+If you want to come back to this later, click **Skip for now** — you can install the agent any time from your dashboard.
+
+</Step>
+
+<Step title="View your miners">
+
+After the agent connects, it begins scanning your network and discovering miners. Within a minute or two you should see your first machines appear in the Hash Streams dashboard.
+
+For each miner you'll see:
+- **Hashrate** — current and expected output
+- **Power draw** — watts consumed
+- **Temperature** — chip and board temperatures
+- **Status** — online, offline, or degraded
+- **Pool** — which mining pool the machine is pointing to
+
+**You're up and running.** From here you can set up event rules, configure curtailment schedules, invite team members, or explore the Marketplace.
+
+<CardGroup cols={2}>
+  <Card title="Site setup" icon="map-pin" href="/hash-streams/site-setup">
+    Organize miners into sites and segments for better visibility.
+  </Card>
+  <Card title="Fleet management" icon="chart-line" href="/hash-streams/fleet-management">
+    Understand the fleet dashboard, filters, and bulk actions.
+  </Card>
+  <Card title="Curtailment" icon="bolt" href="/hash-streams/curtailment">
+    Automate power reduction during peak energy pricing windows.
+  </Card>
+  <Card title="Account setup" icon="gear" href="/account-setup">
+    Configure MFA, notifications, and organization settings.
+  </Card>
+</CardGroup>
+
+</Step>
+
+</Steps>

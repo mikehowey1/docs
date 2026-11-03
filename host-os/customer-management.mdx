@@ -1,0 +1,139 @@
+---
+title: "Customer management"
+description: "Add hosted customers, track their equipment and contracts, manage team access, and monitor account health from a single customer detail page."
+---
+
+The Customers section is the operational center of Host OS. Every hosted account lives here, with tabs for contracts, equipment, usage, financials, default status, activity history, legal agreements, and team members.
+
+## Adding customers
+
+You can add a customer in two ways: create the account yourself and invite them later, or use the quote builder to create the account as part of the sales process.
+
+<Steps>
+  <Step title="Go to Customers">
+    Navigate to **Host OS → Customers** and click **Add Customer**.
+  </Step>
+  <Step title="Fill in contact details">
+    Enter the customer name, company name (optional), contact email, and billing email. If the billing email is left blank, invoices go to the contact email.
+
+    You can also set a phone number, billing currency, and internal notes.
+  </Step>
+  <Step title="Configure account access">
+    Toggle **Active Account** to control whether the customer can use services. Toggle **Portal Access** to enable or disable their ability to log into the customer portal.
+  </Step>
+  <Step title="Create the account">
+    Click **Create Customer**. You are taken directly to the customer detail page.
+  </Step>
+</Steps>
+
+<Tip>
+  Set a separate billing email if your customer has an accounting team that should receive invoices but not general communications.
+</Tip>
+
+## Customer onboarding via invite
+
+After creating a customer account, invite them to set up their login:
+
+1. Open the customer detail page.
+2. Go to the **Team** tab.
+3. Send an invite to the customer's email address.
+
+The customer receives an email with a link to your white-label auth page (`/host/your-slug/auth`). After signing up or logging in, they are automatically connected to your organization as a hosted customer.
+
+<Note>
+  Invited customers authenticate through your branded portal, not the main Dune Digital sign-in. Make sure your host slug is configured in **Host OS → Settings** before sending invites.
+</Note>
+
+## Customer detail page
+
+Click any customer in the list to open their full detail page. The status bar at the top shows whether the account is **Active**, **In Default**, or **Pool Redirected**.
+
+From the top right you can:
+- **View Portal** — see exactly what the customer sees in their portal
+- **Edit** — update contact info, billing email, currency, or notes
+
+### Tabs
+
+<Tabs>
+  <Tab title="Overview">
+    Shows summary cards for active contract count and assigned equipment units. Also displays contact information: email, billing email, phone, and company name.
+
+    If the customer has O&M contracts, a third card shows the number of assigned sites.
+  </Tab>
+  <Tab title="Contracts">
+    Lists all active contracts for this customer. From here you can create a new contract, view contract details, or edit an existing one.
+
+    The badge on the tab shows the active contract count. For O&M contracts, it also shows the number of assigned sites.
+  </Tab>
+  <Tab title="Equipment">
+    Lists all miners and equipment currently assigned to this customer. You can assign additional equipment from this tab or remove assignments.
+  </Tab>
+  <Tab title="Usage">
+    Shows power consumption and hashrate data for the customer's equipment over time.
+  </Tab>
+  <Tab title="Financials">
+    Displays the invoice ledger, credit balance, and payment history. You can also configure whether line items are shown on invoices sent to this customer.
+  </Tab>
+  <Tab title="Default status">
+    Manage delinquency. Mark the customer as in default, set a reason, and activate or deactivate pool redirect. When pool redirect is active, the customer's equipment hashrate is sent to your holding pool.
+  </Tab>
+  <Tab title="Activity">
+    A timestamped timeline of all actions taken on this account: contract changes, invoice events, equipment assignments, status changes, and team activity.
+  </Tab>
+  <Tab title="Legal">
+    View legal agreements the customer has signed, tied to your organization's terms templates.
+  </Tab>
+  <Tab title="Team">
+    Manage who has access to this customer account. You can invite additional team members so the customer's organization can have multiple users log in to the portal.
+
+    You can also set a team name that appears in the portal.
+  </Tab>
+</Tabs>
+
+## Assigning equipment to customers
+
+Equipment is assigned to customers through the **Equipment** tab on the customer detail page, or through the contract creation wizard.
+
+<Steps>
+  <Step title="Open the Equipment tab">
+    Navigate to the customer detail page and click the **Equipment** tab.
+  </Step>
+  <Step title="Assign units">
+    Select available equipment from your organization's inventory. Units marked as staged or unassigned are available for assignment.
+  </Step>
+  <Step title="Link to a contract">
+    Equipment assignments are linked to active contracts. Make sure the customer has an active contract before assigning equipment. If no contract is active, the equipment will show as uncontracted in RevenueGuard.
+  </Step>
+</Steps>
+
+<Warning>
+  Equipment that is generating revenue without an active contract is flagged in **Host OS → RevenueGuard**. Resolve these by creating a contract or removing the equipment from service.
+</Warning>
+
+## Customer team management
+
+Your customers can invite their own team members to access the portal. Each team member signs in through the same white-label auth page and sees the same equipment, earnings, and invoices.
+
+As the host, you can:
+- View all team members on the **Team** tab
+- Set the team name displayed in the portal
+- Remove access for individual members if needed
+
+## Alerts and notifications
+
+Equipment alerts for a customer's machines surface in the customer portal. Customers see alerts for offline units, low hashrate, and temperature thresholds directly in their dashboard.
+
+As the host, you can also send announcements to all customers or targeted groups via **Host OS → Notify**.
+
+## Support tickets
+
+Customer support requests appear in **Host OS → Support Tickets**. Tickets are linked to specific customers and you can respond directly from the platform without leaving Host OS.
+
+## Customer status reference
+
+| Status | Meaning |
+|---|---|
+| Active | Account is in good standing, portal access enabled |
+| Inactive | Account is disabled, customer cannot access services |
+| In Default | Customer has overdue payments; default reason is recorded |
+| Pool Redirected | Hashrate is being redirected to the host holding pool |

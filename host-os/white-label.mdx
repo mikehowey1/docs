@@ -1,0 +1,141 @@
+---
+title: "White-label"
+description: "Give customers a branded sign-in experience at your own URL. Configure your host slug, logo, colors, and slogan so customers interact with your brand, not Dune Digital's."
+---
+
+Host OS includes a white-label customer portal. When customers log in through your branded URL, they see your logo, your colors, and your company name — not Dune Digital's branding. The portal gives customers full visibility into their equipment, earnings, invoices, and payment history.
+
+## Setting up your host slug
+
+Your host slug is the identifier used in your branded customer URL. The auth page for your customers will be:
+
+```
+https://app.dunedigital.xyz/host/your-slug/auth
+```
+
+<Steps>
+  <Step title="Open Host Settings">
+    Go to **Host OS → Settings** and click the **General** tab.
+  </Step>
+  <Step title="Set your host slug">
+    Enter a slug for your organization. Slugs must be URL-safe (lowercase letters, numbers, and hyphens only). Example: `texasmine` or `pacific-mining`.
+  </Step>
+  <Step title="Save">
+    Save your settings. The branded auth page is immediately available at your slug URL.
+  </Step>
+</Steps>
+
+<Note>
+  The system also accepts your organization's main slug as a fallback, so existing links continue to work if you change your host slug.
+</Note>
+
+## Configuring branding
+
+Go to **Host OS → Settings → Branding** to customize what customers see.
+
+### Logo
+
+Upload a square logo image (at least 200×200 px, max 2 MB). This logo appears:
+- On the branded auth (sign-in) page
+- In the host dashboard header
+- On customer-facing pages and emails
+
+The host logo is separate from your organization logo. You can use a different image for the customer-facing portal.
+
+### Slogan
+
+Set a short tagline (up to 150 characters) that appears below your company name on the host dashboard and customer portal header. Example: *"Professional Bitcoin mining hosting, built for scale."*
+
+### Brand colors
+
+Configure a **primary color** and **accent color** using the color picker. These colors apply to:
+- Buttons and interactive elements
+- Links and highlighted UI components
+- The auth page header and branding bar
+
+A live preview shows your logo, name, slogan, and colors before you save.
+
+<Tip>
+  Use your exact brand hex values for consistency with your website and other materials. The color picker accepts any valid hex code.
+</Tip>
+
+---
+
+## What customers see in the white-label portal
+
+After signing in through your branded auth page, customers access a portal scoped to your organization. They cannot see other hosts or other customers.
+
+The customer portal includes:
+
+<AccordionGroup>
+  <Accordion title="Equipment and earnings">
+    Customers see all miners assigned to their account, including real-time hashrate, online/offline status, and temperature data. Earnings are shown per miner and in aggregate, with historical charts.
+  </Accordion>
+  <Accordion title="Invoices and payment history">
+    Customers can view all invoices, check their status (issued, paid, overdue), and download PDFs. Payment history and credit balance are also visible here.
+  </Accordion>
+  <Accordion title="Payment methods">
+    Customers add and manage their payment methods (ACH via Plaid, credit card via Stripe, or crypto). They can enable auto-pay to be charged automatically when invoices are issued.
+  </Accordion>
+  <Accordion title="Alerts">
+    Equipment alerts — offline units, low hashrate, temperature warnings — surface in the customer portal so customers can monitor their fleet without contacting support.
+  </Accordion>
+  <Accordion title="Contracts">
+    Customers can view the details of their active hosting contracts, including start/end dates, rate, and term.
+  </Accordion>
+  <Accordion title="Legal agreements">
+    Customers can view and accept legal agreements tied to your organization's terms templates, such as hosting service agreements.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Email notifications
+
+Emails sent from Host OS to your customers (invoice notifications, announcements, invite emails) display your organization's name in the sender and header. Configure email branding under **Host OS → Settings**.
+
+---
+
+## Inviting customers to the portal
+
+To give a customer access to the white-label portal:
+
+<Steps>
+  <Step title="Create the customer account">
+    Add the customer in **Host OS → Customers** with their contact email.
+  </Step>
+  <Step title="Send an invite">
+    Go to the customer detail page, open the **Team** tab, and send an invite to the customer's email address.
+  </Step>
+  <Step title="Customer signs up">
+    The customer receives an email with a link to your branded auth page. They sign up or log in and are automatically connected to your organization.
+  </Step>
+</Steps>
+
+The invite link encodes a token that automatically links the new account to the correct customer record after authentication. Customers do not need to find your portal URL separately.
+
+---
+
+## Pool settings
+
+Configure the default mining pool URL and credentials used for your customers' equipment under **Host OS → Settings → Pool**. These defaults apply to all hosted equipment unless overridden at the contract level.
+
+When pool redirect is active for a delinquent customer, their equipment sends hashrate to the pool credentials specified in your pool settings.
+
+---
+
+## Privacy settings
+
+Go to **Host OS → Settings → Privacy** to enable **Obfuscate Customer PII**. When enabled, customer names, email addresses, phone numbers, and wallet addresses are partially masked in the Host OS interface — useful when sharing your screen during calls or demos.
+
+Example display with obfuscation on: `J***n D**`, `j***@example.com`
+
+This setting is per-user and does not affect what customers see in their own portal.
+
+---
+
+## Integrations for marketplace sellers
+
+If you sell hardware or hosting through the Dune Digital Marketplace, you can connect your marketplace storefront to Host OS. Customers who purchase from your marketplace listing are directed to your white-label auth page to complete onboarding.
+
+Configure marketplace integrations under **Host OS → Integrations**.

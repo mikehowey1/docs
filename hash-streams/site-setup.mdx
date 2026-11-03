@@ -1,0 +1,175 @@
+---
+title: "Site setup"
+description: "Add a facility to Hash Streams, install the site agent on your local network, and let the agent discover your ASIC miners automatically."
+---
+
+A **site** in Hash Streams represents a physical facility or data center. Each site has at least one agent binary running on a machine inside the local network. The agent scans the network, collects miner telemetry, and streams it to the platform.
+
+## Prerequisites
+
+- A Dune Digital account with owner or admin access
+- A machine on the same local network as your miners that can reach `api.dunedigital.xyz` over outbound HTTPS (TCP 443)
+- No inbound firewall rules are required
+
+## Installation flow
+
+<Steps>
+  <Step title="Create a site">
+    In the Dune Digital dashboard, navigate to **Infrastructure → Sites** and click **Add site**. Enter a name, location, and time zone for the facility.
+
+    Once created, the site appears in your site list with a **No agent** status indicator.
+  </Step>
+
+  <Step title="Download the agent">
+    Navigate to **Infrastructure → Agents → Download agent** in your dashboard. Sign in if prompted.
+
+    After signing in, a setup wizard guides you through selecting your site and operating system. Download the correct package for your agent machine:
+
+    <Tabs>
+      <Tab title="Windows">
+        **File:** `stream-win-x64-latest-installer.zip`
+
+        Requirements:
+        - Windows 10/11 or Windows Server 2019+
+        - x64 architecture (Intel or AMD)
+        - 512 MB RAM minimum (1 GB+ for large subnets)
+        - 200 MB available disk space
+        - PowerShell 5.1+ (runtime is bundled)
+      </Tab>
+      <Tab title="Linux">
+        **File:** `stream-agent_latest_amd64.deb`
+
+        Requirements:
+        - Ubuntu 20.04+, Debian 11+, or RHEL 8+
+        - x64 (amd64) architecture
+        - 256 MB RAM minimum (512 MB+ for large subnets)
+        - 200 MB available disk space
+        - systemd (runtime is bundled)
+      </Tab>
+      <Tab title="Docker">
+        **File:** `stream-docker-latest.zip`
+
+        Requirements:
+        - Docker 20.10+ or Docker Desktop
+        - Linux recommended for `network_mode: host`
+        - 256 MB RAM minimum
+        - 1 GB disk space (image + volume + logs)
+        - `NET_RAW` capability for ICMP-based network discovery
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Generate a registration token">
+    In the setup wizard (or under **Infrastructure → Agents → Add agent**), select the site you created and click **Generate token**. The platform generates a secure one-time token that ties the agent to your site.
+
+    Copy the token — it is shown only once. If you lose it, revoke and regenerate it from the Agents page.
+
+    <Warning>
+      Keep the token secret. It authorizes the agent to upload telemetry to your site and execute commands against your miners.
+    </Warning>
+  </Step>
+
+  <Step title="Install and start the agent">
+    Place the downloaded package on your agent machine and run it. During setup you paste the token when prompted.
+
+    <Tabs>
+      <Tab title="Windows">
+        Extract `stream-win-x64-latest-installer.zip` and run the installer. When prompted, paste your registration token. The installer registers the agent as a Windows service that starts automatically.
+
+        ```powershell
+        # Verify the service is running
+        Get-Service -Name "StreamAgent"
+        ```
+      </Tab>
+      <Tab title="Linux">
+        ```bash
+        # Install the .deb package
+        sudo dpkg -i stream-agent_latest_amd64.deb
+
+        # Set your registration token
+        sudo stream-agent config set agent_token YOUR_TOKEN_HERE
+
+        # Start and enable the service
+        sudo systemctl enable --now stream-agent
+
+        # Verify status
+        sudo systemctl status stream-agent
+        ```
+      </Tab>
+      <Tab title="Docker">
+        Extract the zip and edit `docker-compose.yml` to set your token:
+
+        ```yaml
+        services:
+          stream-agent:
+            image: dunedigital/stream-agent:latest
+            network_mode: host
+            environment:
+              AGENT_TOKEN: "YOUR_TOKEN_HERE"
+            volumes:
+              - stream-agent-data:/data
+            restart: unless-stopped
+        ```
+
+        ```bash
+        docker compose up -d
+        docker compose logs -f stream-agent
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Verify agent registration">
+    On first start, the agent contacts the platform with your token to register itself. The platform responds with your site configuration including any registered PDU and equipment data.
+
+    In the dashboard, navigate to **Infrastructure → Agents**. Within a minute the agent should show a green **Online** badge with its version and last-seen timestamp.
+
+    <Note>
+      If the agent stays in a pending state for more than a few minutes after starting, check that the machine has outbound HTTPS internet access and that the registration token has not expired.
+    </Note>
+  </Step>
+
+  <Step title="Configure network segments">
+    Network segments tell the agent which subnets to scan for miners. Navigate to **Infrastructure → Sites → [your site] → Network segments** and add a segment with:
+
+    - **Name** — e.g. `Row A` or `Subnet 192.168.10.0`
+    - **CIDR** — e.g. `192.168.10.0/24`
+    - **Scan interval** — how often the agent polls miners on this segment (default: 300 seconds / 5 minutes)
+
+    You can adjust the scan interval per segment to trade off data freshness against bandwidth and cost. A 60-second interval uses roughly 5× the data of a 300-second interval.
+  </Step>
+
+  <Step title="Wait for miner discovery">
+    After segments are configured, the agent performs an ICMP sweep followed by API polling of each reachable IP. Discovered miners appear in **Operations → Mining Control** within the first scan cycle.
+
+    If no miners appear after one full scan interval, check:
+    - The agent machine can reach miner IPs (try `ping` from the agent host)
+    - Miners respond on the CGMiner/BMMiner API port (default TCP 4028)
+    - The correct CIDR is entered for the segment
+  </Step>
+</Steps>
+
+## Configuring site details
+
+After setup, you can update site settings at any time under **Infrastructure → Sites → [your site]**:
+
+| Setting | Description |
+|---|---|
+| Name | Human-readable label shown in all dashboards |
+| Location | City / facility address used for display |
+| Time zone | Used for scheduled curtailment events |
+| Default curtailment behavior | Whether miners stop or keep running during curtailment by default |
+
+## Managing multiple agents
+
+A site can have more than one agent, for example if your miners are spread across multiple isolated network segments that cannot see each other. Add additional agents from **Infrastructure → Agents → Add agent** and assign them to the same site with a new token.
+
+Each agent tracks its own set of network segments. The dashboard aggregates telemetry from all agents for a site into a single fleet view.
+
+## Rotating or revoking a token
+
+To regenerate a token, go to **Infrastructure → Agents**, find the agent row, and click **Regenerate token**. The old token is immediately invalidated. Update the token on the agent machine within the configured grace period to avoid a connectivity gap.
+
+<Tip>
+  If you are replacing an agent machine, generate the new token first, install the agent on the new machine, confirm it connects, then decommission the old agent.
+</Tip>

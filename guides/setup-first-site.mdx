@@ -1,0 +1,133 @@
+---
+title: "Setup first site"
+description: "Go from a brand-new Dune Digital account to seeing your first miners in the Mining Control dashboard."
+---
+
+This guide walks you through the complete setup flow — from creating your account to watching live hashrate data roll in.
+
+<Steps>
+  <Step title="Create your Dune Digital account">
+    Go to [dunedigital.xyz](https://dunedigital.xyz) and sign up. After confirming your email you will land on the onboarding screen.
+  </Step>
+
+  <Step title="Complete onboarding">
+    Choose your operating intent on the onboarding screen. Select **Hash Streams** (fleet operations) if you are running your own miners or hosting customers. This determines which modules are enabled in your account.
+
+    <Note>
+      You can change your intent later from **Settings → Organization**. If you also host customers, enable the **Hosting** add-on on the Business plan.
+    </Note>
+  </Step>
+
+  <Step title="Create a site">
+    Navigate to **Setup → Sites** and click **Add Site**, or launch the guided **Setup Wizard** from the Setup landing page.
+
+    Fill in the site form:
+
+    | Field | Description |
+    |---|---|
+    | **Site Name** | A human-readable label, e.g. `Texas Facility` |
+    | **City** | Used for weather data lookups |
+    | **State / Country** | Displayed to customers on invoices and dashboards |
+    | **Timezone** | Controls how timestamps and daily summaries are displayed |
+    | **Capacity (kW)** | Total power available at the site, e.g. `5000` |
+    | **Energy Cost ($/kWh)** | Your power rate, e.g. `0.05`. Leave blank to use the org-level default |
+
+    Click **Continue** (or **Save**) to create the site.
+  </Step>
+
+  <Step title="Add a network segment">
+    Navigate to **Setup → Networks** and select the site you just created from the site picker.
+
+    Add the subnet that your miners sit on, for example `192.168.1.0/24`. The agent uses this CIDR to scope its discovery scan to the correct broadcast domain.
+
+    <Tip>
+      If your miners span multiple VLANs, add each subnet as a separate network segment on the same site.
+    </Tip>
+  </Step>
+
+  <Step title="Download and install the site agent">
+    Navigate to **Setup → Agents** and click **Add Agent**. The dashboard generates a one-time 6-character **registration code** for your site.
+
+    Copy the install command for your platform and run it on a machine inside the mining network (a management server, a Raspberry Pi, or any always-on Linux box on the same layer-2 segment as the miners).
+
+    <Tabs>
+      <Tab title="Linux">
+        ```bash
+        curl -sSL https://get.hashstream.dev | sudo bash -s -- --code <REG_CODE>
+        ```
+      </Tab>
+      <Tab title="Docker">
+        ```bash
+        docker run -d \
+          --name hashstream-agent \
+          --restart unless-stopped \
+          -e REG_CODE=<REG_CODE> \
+          hashstream/agent:latest
+        ```
+      </Tab>
+      <Tab title="Windows">
+        ```powershell
+        powershell -Command "& {iwr -useb https://get.hashstream.dev/win | iex}" -Code <REG_CODE>
+        ```
+      </Tab>
+    </Tabs>
+
+    Replace `<REG_CODE>` with the 6-character code shown in the dashboard. The installer handles downloading the agent binary, registering it with the platform, and starting it as a system service.
+
+    <Warning>
+      Registration codes expire. If yours expires before you run the command, click **Regenerate Code** in the Agents page to get a new one.
+    </Warning>
+  </Step>
+
+  <Step title="Verify agent connection">
+    After the install command completes, return to **Setup → Agents**. Within a few seconds the agent's status should change from **Pending** to **Online**.
+
+    The agent authenticates using an encrypted token issued during bootstrap. You do not need to manage API keys manually — the installer handles this automatically.
+
+    <Note>
+      If the agent stays **Pending** for more than two minutes, check that the machine has outbound HTTPS access and that the registration code has not expired.
+    </Note>
+  </Step>
+
+  <Step title="Run a network scan">
+    Navigate to **Setup → Networks**, select your site, and click **Scan** next to the network segment you added.
+
+    The agent broadcasts to the subnet and probes common miner API ports (port 4028 for CGMiner/BMMiner-compatible firmware, and vendor-specific APIs for other manufacturers). Discovered miners are added to the equipment registry automatically.
+
+    A typical scan of a /24 completes in under 60 seconds.
+  </Step>
+
+  <Step title="View miners in Mining Control">
+    Navigate to **Mining Control → Discovery** (or **Hash Streams → Discovery**).
+
+    You will see a live grid of all discovered miners with their status, hashrate, model, and IP address. Status badges refresh on a 50-second polling cycle.
+
+    <CardGroup cols={2}>
+      <Card title="Active" icon="activity">
+        Miner is hashing within the expected freshness window.
+      </Card>
+      <Card title="Degraded" icon="alert-triangle">
+        Miner is online but reporting a warning, throttled hashrate, or chip failure.
+      </Card>
+      <Card title="Offline" icon="x-circle">
+        Miner is not responding on the network.
+      </Card>
+      <Card title="Stale" icon="radio">
+        Data is older than the freshness window — agent may have lost connectivity.
+      </Card>
+    </CardGroup>
+
+    Use the filter bar to narrow by status, network segment, firmware, PDU, or CDU.
+  </Step>
+</Steps>
+
+## What's next
+
+<CardGroup cols={2}>
+  <Card title="Onboard customers" icon="users" href="/guides/onboard-customers">
+    Add hosted customers, create contracts, and send invoices.
+  </Card>
+  <Card title="Configure alerts" icon="bell" href="/guides/configure-alerts">
+    Set up event rules so you're notified when equipment has problems.
+  </Card>
+</CardGroup>

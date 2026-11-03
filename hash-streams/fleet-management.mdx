@@ -1,0 +1,179 @@
+---
+title: "Fleet management"
+description: "Monitor and control your entire ASIC miner fleet from the Hash Streams dashboard — view live telemetry, issue commands, manage PDUs, and track maintenance."
+---
+
+## Mining control dashboard
+
+Navigate to **Operations → Mining Control** to see your full fleet. The dashboard refreshes every 50 seconds and displays live status for every discovered miner assigned to the selected site.
+
+The top of the page shows aggregate counts across five status categories:
+
+| Status | Meaning |
+|---|---|
+| **Active** | Miner is hashing at or near ideal hashrate |
+| **Degraded** | Miner is running but performance is below normal |
+| **Offline** | Miner is not responding |
+| **Paused / Sleeping** | Miner has been put into sleep or low-power mode |
+| **Stale** | Agent last reported more than one scan interval ago |
+| **Lost** | No telemetry received for an extended period |
+
+## Viewing your fleet
+
+The fleet view supports two layouts: **table** (default) and **grid**. Switch between them using the view toggle in the filter bar.
+
+### Filtering and searching
+
+The filter bar provides:
+
+- **Search** — Free-text search across serial number, IP address, MAC address, model, vendor, rack location, and display name
+- **Status filter** — Show only miners in a specific status category
+- **Advanced filters** — Filter by firmware flavor, model family (S21, L7, M60, etc.), vendor (Bitmain, MicroBT, Canaan), rack location, and curtailment participation
+- **Sort** — Sort by equipment number, hashrate, power, temperature, uptime, or efficiency in ascending or descending order
+
+Your view mode and sort preferences are remembered between sessions.
+
+### Table columns
+
+Each row in the table shows:
+
+- Equipment number and display name
+- IP address and MAC address
+- Current hashrate vs. ideal hashrate
+- Power draw (W)
+- Chip temperature (°C)
+- Efficiency (J/TH)
+- Uptime
+- Status badge
+- Curtailment participation badge (inherit / curtail / protected)
+
+## Miner detail page
+
+Click any miner row to open the detail page.
+
+### Live telemetry panel
+
+The header card shows the miner's current status with a color-coded accent bar, and the key metrics card displays:
+
+- **Hashrate** — Current TH/s with a progress bar showing percentage of rated spec
+- **Uptime** — Days and hours since last restart
+- **Efficiency** — J/TH
+- **Power** — Current watts
+- **Temperature** — Chip temperature with inlet and outlet temps if available
+
+### Historical charts
+
+Below the metrics panel you can select a time range (1h, 6h, 24h, 7d, 30d) and view four charts:
+
+- Hashrate over time vs. theoretical maximum
+- Chip temperature over time
+- Uptime and availability (performance chart)
+- Energy consumption
+
+Charts update automatically via real-time subscription when you are on the detail page.
+
+### Pool status
+
+The Pool status card shows the active pool URL, worker name, pool connection status, accepted shares, rejected shares, and hardware errors if reported by the firmware.
+
+### Hardware details
+
+The detail page includes expandable cards for:
+
+- **Power supply** — PSU model, serial number, 12V voltage, current, PSU temperature, and efficiency
+- **Cooling** — Fan 1–4 RPM and status, cooling mode, fan duty cycle, min/max/average RPM
+- **Hardware health** — Fan, temperature, hashrate, network, and update health indicators from firmware
+- **Preset / power mode** — Current operating mode name and preset
+- **Infrastructure** — Rack location, PDU ID and port number, CDU ID
+- **Identity** — Serial number, MAC address, equipment number, virtual equipment ID
+- **Network** — IP address, hostname, gateway, netmask, DNS, DHCP setting
+- **Firmware** — Version, flavor, build date, API version
+
+An extended telemetry section at the bottom surfaces all raw properties reported by the agent that are not mapped to standard fields.
+
+## Sending commands
+
+You must have an active agent for the site to issue commands. Commands are queued in the platform and delivered to the agent on its next poll cycle.
+
+### Single-miner commands
+
+From the miner detail page or the table row action menu:
+
+| Command | Description |
+|---|---|
+| **Reboot** | Restarts the miner's control board (graceful) |
+| **Sleep** | Puts the miner into sleep / low-power mode |
+| **Wake** | Brings a sleeping miner back online |
+| **Change power mode** | Sets the miner to a specific operating mode (e.g., normal, high-efficiency, overclocked) |
+| **Configure pools** | Sets up to 3 stratum pool configurations with priority ordering |
+| **Factory reset** | Resets the miner to factory defaults |
+
+### Bulk commands
+
+Select multiple miners using the checkboxes, then choose an action from the bulk action menu:
+
+- Restart all selected
+- Sleep / wake all selected
+- Change power mode for all selected
+- Configure pools for all selected
+- Set curtailment participation (inherit / always curtail / protected)
+- Clear protected overrides
+
+Bulk actions display a confirmation dialog showing the count of affected miners. For selections of 50 or more miners, the dialog includes an additional warning.
+
+### Command history
+
+The **Command History** tab on the Mining Control page lists all pending and recently completed commands with their status, target miner, and timestamp. You can cancel pending commands, delete history entries, or retry failed commands individually or in bulk.
+
+## PDU control
+
+Navigate to **Operations → PDU Control** to manage your power distribution units.
+
+### Port control view
+
+Each PDU is displayed as a grid of outlets matching its physical layout. The grid shows:
+
+- Port number
+- Current on/off state
+- Phase assignment (A, B, or C)
+- Miner assignment (if the port is mapped to a virtual equipment record)
+
+Click any port to toggle it on or off. The command is queued to the agent and the port history is recorded.
+
+### Command status
+
+The **Command Status** tab shows pending PDU commands and recently executed port toggle history across all PDUs for the site.
+
+### Port history
+
+The **Port History** tab shows a time-series log of port state changes, useful for correlating power events with miner uptime data.
+
+## Equipment management
+
+Under **Infrastructure → Equipment** you can view and manage:
+
+- **Miners registry** — All virtual equipment records for the site, including assignments, miner specs, and operating modes
+- **PDU registry** — Registered PDU configurations with IP address, MAC address, port count, and phase layout
+- **Equipment assignments** — Which miner is mapped to which PDU port
+
+## Maintenance tracking
+
+Navigate to **Operations → Maintenance** to log maintenance activities against individual miners or groups.
+
+### Issue and downtime log
+
+The **Issue & Downtime Log** records unplanned downtime events with:
+
+- Start and end timestamps
+- Duration
+- Issue category (hardware failure, network, firmware, etc.)
+- Description
+- Associated miner(s)
+
+### Maintenance categories
+
+You can define custom maintenance categories under **Operations → Maintenance → Categories** to match your facility's workflows.
+
+<Tip>
+  Use the maintenance log to correlate fleet-level downtime trends with hardware suppliers, firmware versions, or environmental conditions using the analytics dashboard.
+</Tip>

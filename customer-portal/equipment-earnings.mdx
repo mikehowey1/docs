@@ -1,0 +1,264 @@
+---
+title: "Equipment & Earnings"
+description: "Monitor your hosted miners in real time, drill into individual unit stats, and track your Bitcoin earnings and settlement history."
+---
+
+## Your equipment list
+
+Navigate to **Equipment** in the sidebar to see every miner assigned to you. The list updates every 60 seconds and shows:
+
+| Column | What it means |
+|--------|---------------|
+| **Host** | The hosting organization that manages this unit |
+| **Unit** | The unit identifier assigned by your host (e.g., `MNR-0042`) |
+| **Model** | The ASIC model (e.g., Antminer S19 Pro) |
+| **Status** | Current operational state |
+| **Hashrate** | Live hashrate in TH/s |
+| **Eff%** | Hashrate as a percentage of the miner's spec rating |
+| **Power** | Current power draw in watts |
+| **Updated** | How long ago the last telemetry was received |
+
+### Equipment statuses
+
+<AccordionGroup>
+  <Accordion title="Online">
+    The miner is hashing at or near expected rates. No action required.
+  </Accordion>
+  <Accordion title="Standby">
+    The miner is powered on but intentionally paused — typically during a scheduled curtailment window or a manual hold by your host.
+  </Accordion>
+  <Accordion title="Degraded">
+    The miner is running but performing below its hashrate spec. This can indicate a faulty hash board, a cooling issue, or a power mode change. Your host is typically notified automatically.
+  </Accordion>
+  <Accordion title="Offline">
+    No telemetry received. The miner may be powered down, rebooting, or disconnected from the network. If HashGuard is enabled on your contract, replacement hashrate is injected automatically while the unit is offline.
+  </Accordion>
+  <Accordion title="Maintenance">
+    Your host has flagged this unit as undergoing maintenance. Billing adjustments (if any) are defined by your contract terms.
+  </Accordion>
+  <Accordion title="Suspended">
+    The unit has been suspended, typically due to an overdue invoice or a contract issue. Contact your host to resolve.
+  </Accordion>
+</AccordionGroup>
+
+### Filtering and searching
+
+Use the search box to find a miner by unit name, serial number, model, or contract number. Use the **Status** dropdown to filter to a specific state. If you have equipment under more than one contract, a **Contract** filter lets you scope the view to a single agreement.
+
+<Tip>
+  On mobile, each miner appears as a tappable card. On desktop, click any row to open the miner detail view.
+</Tip>
+
+## Miner detail view
+
+Click any miner row (or card on mobile) to open the detail page for that unit. You see:
+
+### Identity and status header
+
+- Unit ID and ASIC model
+- Serial number
+- Current status with a color-coded indicator that pulses when the miner is actively hashing
+- Last telemetry timestamp
+
+### Live metrics
+
+| Metric | Description |
+|--------|-------------|
+| **Hashrate** | Current TH/s with a progress bar showing percentage of spec |
+| **Uptime** | Continuous runtime since last restart (e.g., `12d 4h`) |
+| **Efficiency** | Power consumption per terahash (J/TH) |
+| **Power** | Real-time watt draw |
+| **Temperature** | Chip temperature in °C, plus inlet and outlet readings where available |
+
+### Historical charts
+
+Use the time range selector (24h, 7d, 30d, 90d) to change the chart window. Two charts are displayed side by side:
+
+- **Hashrate over time** — actual TH/s versus the miner's theoretical spec line
+- **Temperature over time** — chip, inlet, and outlet temperature trends
+
+A performance bar chart below shows daily hashrate efficiency and uptime. Click any day bar to open an hourly drill-down showing how the unit performed hour by hour.
+
+### Pool connection
+
+The **Pool** card shows the active mining pool URL, worker name, and pool connection status. If you want to change your mining pool, use the **Change Pool** button on the main Equipment page to submit a request to your host.
+
+### Cooling
+
+The **Cooling** card shows fan RPM readings (fan 1–4), average fan duty percentage, and cooling mode. Abnormal fan readings are highlighted.
+
+## Site dashboards (O&M customers)
+
+If your contract is an O&M agreement, you access site-level dashboards from your home screen by clicking the site card for the facility your host manages. Each site has five views:
+
+<Tabs>
+  <Tab title="Overview">
+    A summary of the site's current operational state: total miners, online count, active hashrate, and any open alerts. A status card at the top shows the site name and location.
+  </Tab>
+  <Tab title="Power">
+    Power consumption metrics across the facility: total kW draw, efficiency trends, and cost data. Use this view to understand how your power budget is being used.
+  </Tab>
+  <Tab title="Mining">
+    Fleet-level hashrate performance for the site: aggregate TH/s, uptime percentage, and efficiency. Compare actual output against the contracted hashrate.
+  </Tab>
+  <Tab title="Cooling">
+    CDU (coolant distribution unit) status, coolant inlet and outlet temperatures, and cooling efficiency metrics. Elevated temperatures are flagged for your host to investigate.
+  </Tab>
+  <Tab title="Map">
+    A geographic map view of the site location.
+  </Tab>
+</Tabs>
+
+## Earnings
+
+Navigate to **Earnings** to see your Bitcoin mining income. The page has three tabs.
+
+### Overview tab
+
+Four summary cards show your current earnings position:
+
+| Card | What it shows |
+|------|---------------|
+| **Total settled** | All Bitcoin confirmed and paid out to you across all settlement periods |
+| **Net pending today** | Estimated net BTC accrued so far today, after power costs are deducted |
+| **Active hashrate** | Your combined live hashrate across all active contracts |
+| **Est. daily earnings** | Projected USD earnings for a full day at today's hashprice |
+
+A **Real-time earnings** panel (when you have active contracts) shows the current hashprice in USD per TH/day, the live Bitcoin price, your total hashrate, total power draw, and the estimated daily power cost. These figures update when you click **Refresh**.
+
+<Note>
+  Hashprice fluctuates with Bitcoin price and network difficulty. The estimated daily earnings figure is an approximation based on current market conditions, not a guarantee.
+</Note>
+
+### Contracts tab
+
+Lists every active hosting contract linked to your account with:
+
+- Contract number and host name
+- ASIC model covered by the contract
+- Quantity of units (or TH/s for Smart Mining contracts)
+- Total hashrate and power in kW
+- Power rate per kWh (if applicable)
+- Connector fee percentage
+- HashGuard status badge (if enabled)
+
+### Payouts tab
+
+Shows your full settlement history. Expand the **Payout Info & Wallet** section to review:
+
+- **Payout schedule** — Earnings are settled periodically by your host after admin verification. Your host controls the settlement cadence.
+- **Minimum threshold** — BTC payouts require a minimum of `0.001 BTC`. Smaller amounts accumulate until the threshold is met.
+- **Fees** — BTC payouts carry no platform fee (only standard Bitcoin network fees). Stablecoin payouts have a 1% conversion fee to cover the BTC-to-stablecoin exchange.
+- **Supported payout currencies** — BTC, USDT (TRC20), USDT (ERC20), USDC (Solana), USDC (ERC20), USDC (TRC20)
+
+The settlement history table shows each payout with:
+
+- Payout date
+- Contract number
+- Theoretical hashrate for that period
+- Gross BTC earned
+- Net BTC after fees
+- Estimated USD value at settlement
+- Status (pending, settled, or paid)
+
+Configure where your earnings are sent in the [Wallet](/customer-portal/payments-wallet#wallet) section.
+
+## HashGuard
+
+Navigate to **HashGuard** to see your equipment protection status.
+
+### Summary cards
+
+| Card | What it shows |
+|------|---------------|
+| **Protection status** | Whether HashGuard is actively compensating a unit right now |
+| **Total compensation** | Cumulative USD credit accrued from all HashGuard events |
+| **Protected equipment** | Number of assets with HashGuard enabled vs. your total |
+| **Avg health score** | Average equipment health score across your protected fleet (0–100) |
+
+### Active protection events
+
+When a miner goes offline or drops below threshold, a live credit card appears showing:
+
+- Which unit triggered the event and why
+- How long the event has been running
+- Injected TH/s being credited on your behalf
+- Compensation accruing in real time at the contracted rate per TH/day
+
+The live data updates via a real-time connection — a **Live** badge appears in the page header when the connection is active.
+
+### Equipment health tab
+
+Shows an individual health card for each unit that has had HashGuard activity in the last 30 days. Each card displays:
+
+- Health score (0–100) and reliability grade (A–F)
+- Uptime percentage
+- Number of failover events triggered
+- Total downtime hours
+- Total compensation earned
+- Date of the last failover
+
+### Compensation history tab
+
+A chronological log of all completed HashGuard events, including duration, injected hashrate, rate per TH/day, and final compensation amount.
+
+<Note>
+  If none of your contracts have HashGuard enabled, the HashGuard page shows an explanation and a button to request enablement from your host via a support ticket.
+</Note>
+
+## Alerts
+
+Navigate to **Alerts** to create automated notifications for equipment events.
+
+<Steps>
+  <Step title="Create an alert">
+    Click **Create alert** and give the alert a name.
+  </Step>
+  <Step title="Choose a metric">
+    Select what to monitor:
+    - **Hashrate** — triggers when hashrate falls below or rises above a percentage of spec
+    - **Power** — triggers on power draw changes
+    - **Efficiency** — triggers on J/TH deviation
+    - **Temperature** — triggers on chip temperature thresholds
+  </Step>
+  <Step title="Set thresholds">
+    Enter a lower and upper threshold as a percentage deviation, or enable **Use spec thresholds** to have the system use the miner's published specifications automatically.
+  </Step>
+  <Step title="Set scope">
+    Apply the alert to **All equipment** or restrict it to a specific unit or contract.
+  </Step>
+  <Step title="Choose notification channels">
+    Enable any combination of:
+    - **Email** — sent to your contact email on file
+    - **Webhook** — POST to a URL you provide (useful for Slack, PagerDuty, or custom integrations)
+    - **Telegram** — sent to your configured Telegram chat
+  </Step>
+</Steps>
+
+Each alert has an enable/disable toggle so you can silence it temporarily without deleting it. An **Alert history** log below your alert list shows all recent trigger events.
+
+<Note>
+  Alerts are for equipment performance events. For announcements and messages from your hosting provider, check the **Inbox** section. For assistance from your host, open a **Support** ticket.
+</Note>
+
+## Contracts
+
+Navigate to **Contracts** to review every hosting agreement associated with your account. Active contracts are listed first, followed by expired and cancelled ones.
+
+Each contract card shows:
+
+- Contract number, term length, and contract type (Hosted, Smart Mining, Lease, or O&M)
+- Start and end dates
+- Billing method (Metered, Hashrate-based, Calculated, or Fixed)
+- Power rate per kWh (where applicable)
+- Connector fee percentage
+- Fixed monthly rate (if applicable)
+- Power cap in kW (if applicable)
+- Number of equipment assignments (or TH/s for Smart Mining)
+- HashGuard badge and auto-renew badge (if applicable)
+
+Click the chart icon on an active contract to open the **Contract Analytics** dialog, which shows hashrate and earnings trends for that specific contract over time.
+
+<Warning>
+  If a contract shows a **Past end date** warning badge, it means the contract's end date has passed but it has not been formally renewed or closed. Contact your host to clarify the contract status.
+</Warning>

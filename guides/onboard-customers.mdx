@@ -1,0 +1,159 @@
+---
+title: "Onboard customers"
+description: "Add a new hosted customer in Host OS, create a contract, assign equipment, and collect your first payment."
+---
+
+Use this guide when you are a hosting provider adding a customer to your operation for the first time.
+
+## Prerequisites
+
+<CardGroup cols={2}>
+  <Card title="Business plan" icon="building">
+    Customer management requires a Business plan or higher.
+  </Card>
+  <Card title="Hosting add-on" icon="plug">
+    The Hosting add-on must be enabled on your organization to access Host OS features.
+  </Card>
+</CardGroup>
+
+You also need at least one site with miners already set up. If you haven't done that yet, follow the [Setup first site](/guides/setup-first-site) guide first.
+
+---
+
+<Steps>
+  <Step title="Create the customer record">
+    In **Host OS**, navigate to **Customers** and click **Add Customer**.
+
+    Fill in the customer's details:
+
+    | Field | Notes |
+    |---|---|
+    | **Customer Name** | The contact person's full name (required) |
+    | **Company Name** | Optional — shown on invoices if provided |
+    | **Contact Email** | Used for portal invitations and general communication (required) |
+    | **Billing Email** | Where invoices are sent. Defaults to the contact email if left blank |
+    | **Phone** | Optional |
+    | **Billing Currency** | Select a specific currency or leave as **org default** |
+    | **Active Account** | Leave enabled so the customer can access services |
+    | **Portal Access** | Leave enabled so the customer can log into the customer portal |
+
+    You can also add internal notes (not visible to the customer) in the **Notes** section.
+
+    Click **Create Customer** to save.
+
+    <Note>
+      The customer is not notified at this point. You send the portal invitation in a later step.
+    </Note>
+  </Step>
+
+  <Step title="Create a hosting contract">
+    From the customer detail page, open the **Contracts** tab and click **New Contract**.
+
+    **Step 1 — Configure contract details**
+
+    First select the contract type that matches the arrangement:
+
+    <AccordionGroup>
+      <Accordion title="Hosted">
+        You host the customer's own equipment at your facility. Bill by kWh (metered from PDU, calculated from spec, or derived from hashrate) or a fixed monthly rate.
+      </Accordion>
+      <Accordion title="Lease">
+        You lease your equipment to the customer. Equipment reverts to you when the contract expires. Supports up to 3 manual extensions.
+      </Accordion>
+      <Accordion title="Infinity">
+        A hash-rate lease: the customer buys hash streams rather than physical machines. Activate immediately — no equipment assignment required.
+      </Accordion>
+      <Accordion title="O&M">
+        Operations and maintenance contract. You manage a customer's remote site on their behalf. Assign sites rather than individual miners.
+      </Accordion>
+    </AccordionGroup>
+
+    Then configure the remaining fields:
+
+    | Field | Notes |
+    |---|---|
+    | **Contract Term** | Month-to-Month, 3 months, 6 months, 1 year, 2 years, or Custom |
+    | **Start Date** | Defaults to today |
+    | **End Date** | Auto-calculated from the term. Enable **Override** to set a specific date |
+    | **Auto-renew** | When enabled, the contract renews on the end date. Customers must notify 60 days before the end date to cancel |
+    | **Billing Method** | **Metered** (PDU readings), **Calculated** (power spec × hours), or **Hash** (hashrate × miner efficiency) |
+    | **Rate ($/kWh)** | Pre-filled from your org energy rate |
+    | **Power Cap (kW)** | Optional maximum power allocation for this customer |
+
+    Click **Next: Assign Equipment** to save the draft and advance to step 2.
+
+    <Note>
+      The contract is saved as a **Draft** with a temporary ID. A permanent contract number is assigned when you activate it.
+    </Note>
+
+    **Step 2 — Assign equipment**
+
+    Select the miners to include under this contract. You can filter by site, model, and status. Assigned miners will appear in the customer's portal.
+
+    Click **Complete Setup** when done.
+  </Step>
+
+  <Step title="Activate the contract">
+    From the **Contracts** tab on the customer page, find the draft contract and click **Activate**. The system generates a permanent contract number and sets the status to **Active**.
+
+    <Warning>
+      Once activated, the contract start date is locked. Make sure the start date is correct before activating.
+    </Warning>
+  </Step>
+
+  <Step title="Invite the customer to the portal">
+    From the customer detail page, click **Send Portal Invite**. Dune Digital sends a branded invitation email to the customer's contact email address.
+
+    The email includes a one-time link that lets the customer set a password and access their portal. Your organization's logo and name appear in the email if you have configured branding under **Settings → Branding**.
+  </Step>
+
+  <Step title="Customer accepts and sets up their account">
+    The customer clicks the link in the invitation email, sets a password, and logs in to the Customer Portal.
+
+    From the portal, the customer can:
+    - View the miners assigned to their contract and monitor live hashrate
+    - See their billing history and download invoices
+    - Add a payment method (ACH, card, or crypto)
+    - Configure alerts for their equipment
+
+    <Tip>
+      Send your customer the [Manage payments](/guides/manage-payments) guide so they know how to add a payment method before their first invoice arrives.
+    </Tip>
+  </Step>
+
+  <Step title="Generate the first invoice">
+    Navigate to **Host OS → Invoices** and click **Generate Invoices** (or use **Run Batch Generation** to generate for all active customers at once).
+
+    In the batch generation dialog:
+    1. Select the **Billing Period** (the calendar month to invoice)
+    2. Choose **All Customers** or a specific customer
+    3. Check **Skip customers with existing invoices** to avoid duplicates
+    4. Review whether auto-send is enabled — if it is, invoices are emailed to customers automatically on generation
+
+    Click **Generate All** (or **Generate Invoice** for a single customer).
+
+    <Note>
+      Customers in default or with a billing hold receive a **Held** invoice and are not emailed automatically.
+    </Note>
+  </Step>
+
+  <Step title="Prompt the customer to set up payment">
+    If the customer hasn't added a payment method yet, navigate to the customer detail page and open the **Billing** tab. From there you can send a payment setup link or remind them to visit **Payments** in their Customer Portal.
+
+    Supported payment methods:
+    - **ACH bank transfer** — no fee, recommended (requires ACH to be enabled on your plan)
+    - **Bitcoin / USDC / USDT** — small network fee
+    - **Credit card** — processing fee applies, subject to a per-transaction limit
+  </Step>
+</Steps>
+
+## What's next
+
+<CardGroup cols={2}>
+  <Card title="Configure alerts" icon="bell" href="/guides/configure-alerts">
+    Set up event rules to get notified when customer equipment has problems.
+  </Card>
+  <Card title="Manage payments" icon="credit-card" href="/guides/manage-payments">
+    Learn how invoicing, collections, and payouts work.
+  </Card>
+</CardGroup>

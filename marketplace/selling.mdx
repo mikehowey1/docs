@@ -1,0 +1,157 @@
+---
+title: Selling
+description: How to apply as a seller, create listings, manage orders, and use AI-powered pricing tools on the Dune Digital Marketplace.
+---
+
+Selling on the Dune Digital Marketplace requires an approved seller account. Once approved, you get a public storefront, a full listing management dashboard, AI-powered bulk pricing tools, and optional HashGuard integration.
+
+## Who can sell
+
+Any individual or registered business entity can apply. You need a Dune Digital account before applying.
+
+Sellers fall into two categories:
+
+- **Individual** — selling personal mining equipment under your own legal name or DBA
+- **Business** — selling as a registered business entity with a legal entity name, address, and optional EIN/tax ID
+
+## Apply to become a seller
+
+Navigate to [dunedigital.xyz/marketplace/sell/apply](https://dunedigital.xyz/marketplace/sell/apply). The application has up to four steps depending on your account type.
+
+<Steps>
+  <Step title="Choose account type">
+    Select **Individual** (selling personal equipment) or **Business** (selling as a registered business entity).
+  </Step>
+  <Step title="Personal information">
+    Provide your name, email, phone, and address. You must also supply your full legal name or DBA exactly as it appears on official documents, along with your legal address.
+
+    For individuals, you can check **Legal address is same as above** to reuse your personal address.
+
+    Optionally set a **display name** — this is the public name shown on your listings and storefront — and a short bio.
+  </Step>
+  <Step title="Business information (business accounts only)">
+    Provide your business name, legal entity name (as registered), EIN/tax ID (optional), website, and legal business address.
+  </Step>
+  <Step title="Review and submit">
+    Review all provided information. By submitting, you agree to the platform's seller terms. Applications are typically reviewed within 1–2 business days.
+  </Step>
+</Steps>
+
+After submitting, your application enters a **pending** state. You will be notified once a decision is made. If your application is not approved, a reason is provided and you may contact support for more information.
+
+## Your seller storefront
+
+Every approved seller gets a public storefront at `dunedigital.xyz/s/<your-slug>`. The storefront shows your display name, logo (if configured), bio, and a link to browse your active listings.
+
+Buyers can reach your storefront directly without going through the main marketplace browse page. Storefronts support custom branding: you can configure a primary color and logo through your seller settings.
+
+## Creating listings
+
+From your seller dashboard at [dunedigital.xyz/marketplace/my-listings](https://dunedigital.xyz/marketplace/my-listings), click **Create Listing**.
+
+<Tabs>
+  <Tab title="Equipment for sale">
+    Sell physical ASIC miners. Provide:
+
+    - **Title** and description
+    - **Brand**, hashrate (TH/s), power draw (W), and efficiency (J/TH)
+    - **Condition** — new, like-new, good, fair, or needs repair
+    - **Quantity** available and any min/max purchase limits
+    - **Asking price** and currency
+    - **Shipping** — ship-from location and lead time in days
+    - **Photos** — uploaded images are moderated before going live
+    - **HashGuard** — opt listings in to automatic performance-credit coverage (requires hosting integration)
+    - **Listing policy** — selects which fee rules, deposit amounts, and sales tax apply
+    - **Visibility** — **Global** (visible to all marketplace buyers) or **Local** (visible only to customers of your hosting organization)
+  </Tab>
+  <Tab title="Hash contract">
+    Sell contracted hashrate backed by your infrastructure. Provide:
+
+    - **Base price per TH/s** per month
+    - **Contracted hashrate** (TH/s) or a dynamic min/max range buyers can adjust
+    - **Contract length** options (1–12 months)
+    - **HashGuard** monthly cost (optional add-on fee)
+    - **Payment model** — fixed monthly or pay-as-you-go per kWh
+    - **Price ladder** — optional volume discounts for longer terms
+  </Tab>
+  <Tab title="Hosted equipment">
+    List equipment that will be shipped to and operated at your hosting facility. Includes all sale listing fields plus hosting site selection. Applicable installation and deposit fees are set by your listing policy.
+  </Tab>
+  <Tab title="Lease">
+    List equipment for short-term lease. Buyers configure their own mining pool destination (primary, failover 1, failover 2) at checkout.
+  </Tab>
+</Tabs>
+
+New listings are created as **drafts**. Submit a draft for approval when it is ready. Approved listings move to **active** status and appear in the public marketplace.
+
+## Managing listings
+
+Your dashboard organizes listings across four tabs: **Drafts**, **Pending**, **Active**, and **Archived**.
+
+From the actions menu on any listing you can:
+
+- **Edit** — update specs, price, quantity, photos, or settings
+- **Pause / Resume** — temporarily hide an active listing without deleting it
+- **Duplicate** — create a draft copy of an existing listing
+- **Mark as featured** — highlight a listing in marketplace browse results
+- **Request sponsorship** — submit an active listing for sponsored placement
+- **Restock & Reactivate** — increase quantity and reactivate a sold-out listing
+- **Archive** — move completed or cancelled listings out of the active view
+
+You can select multiple listings and apply bulk actions: pause, resume, archive, or update price and quantity in one operation.
+
+Use the search bar to find listings by title, equipment name, or customer name.
+
+## AI Listing Manager
+
+The AI Listing Manager (available in the seller dashboard under **AI Price Sync**) lets you create and update listings in bulk by uploading a supplier price sheet.
+
+<Steps>
+  <Step title="Upload a price list">
+    Click **Import Price List** and upload a CSV or PDF from your supplier. The AI parser extracts model names, hashrates, power draw, efficiency, pricing, and other fields.
+  </Step>
+  <Step title="Review parsed results">
+    Each parsed item is shown with its proposed action: **create** (new listing) or **update** (existing listing matched by brand and hashrate). You can deselect individual items before proceeding.
+  </Step>
+  <Step title="Preview and confirm">
+    Review a full preview of how each listing will appear — including policy, fee breakdown, and HashGuard status — before committing.
+  </Step>
+  <Step title="Sync">
+    Click **Sync** to create new listings as drafts and update existing ones. The system skips duplicates automatically. A history of all past imports is saved in the dashboard.
+  </Step>
+</Steps>
+
+Two sync modes are available:
+
+- **Full sync** — create new listings and update existing ones
+- **Update only** — only update prices and quantities on existing listings, no new listings created
+
+<Note>
+  New listings created by AI Listing Manager are always saved as **drafts**. You must submit them for approval individually or in bulk before they appear in the marketplace.
+</Note>
+
+## Orders and fulfillment
+
+When a buyer completes a purchase, the order appears in the **Purchases** tab of your dashboard. For each order you can see the buyer's display name, payment status, and order details.
+
+Fulfill orders promptly after payment is confirmed. For physical equipment, provide tracking information as soon as it is available.
+
+## Payouts
+
+Seller fees and payout terms are disclosed in your seller dashboard. Dune Digital deducts a marketplace service fee before remitting payment. Your listing policy controls what buyer-facing fees apply (admin fee, transfer fee, installation fee, hosting deposit, sales tax).
+
+## Google Merchant integration
+
+Active global listings are eligible for Google Merchant integration, making them discoverable in Google Shopping results. Eligible listings generate product structured data automatically. Contact support to enable Google Merchant for your seller account.
+
+## Seller settings and policies
+
+From your dashboard settings you can:
+
+- Update your display name, bio, logo, and storefront branding colors
+- Configure **listing policies** — fee rules, deposit amounts, and sales tax rates that apply to your listings
+- Manage **HashGuard configuration** — performance thresholds, credit caps, and exclusion rules per contract
+
+<Warning>
+  Sellers are responsible for complying with all applicable laws, providing accurate listing information, fulfilling orders promptly, and handling all taxes related to their sales.
+</Warning>

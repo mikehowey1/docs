@@ -1,0 +1,122 @@
+---
+title: HashGuard
+description: HashGuard automatically monitors your contracted hashrate and issues service credits when performance drops below your contract threshold — no claim required.
+---
+
+HashGuard™ is an automatic performance-protection layer built into the Dune Digital Marketplace. When equipment on a HashGuard-enabled listing underperforms relative to the contracted threshold, TH/s credits are issued automatically and applied to your next invoice. You do not need to file a claim or open a support ticket.
+
+## How it works
+
+<Steps>
+  <Step title="Monitor">
+    Continuous hashrate monitoring measures your equipment's output against the performance thresholds defined in your hosting contract. Monitoring runs 24/7 via the seller's site agent and requires no action from you.
+  </Step>
+  <Step title="Detect">
+    When your equipment's hashrate falls below the seller-defined degraded or offline threshold, a HashGuard event is automatically triggered. Each seller configures their own thresholds — most set "degraded" at 80–90% of rated hashrate and "offline" at 10% or below.
+  </Step>
+  <Step title="Credit">
+    Credits are issued in TH/s based on the gap between your contracted hashrate and actual output during the event. The value is determined by multiplying the credited TH/s by the hashprice on the day the event occurs. Credits are applied directly to your next billing invoice — automatically, with no forms to submit.
+  </Step>
+</Steps>
+
+## How credits are calculated
+
+<CardGroup cols={2}>
+  <Card title="Issued in TH/s" icon="trending-up">
+    Credits are denominated in hashrate (TH/s), not a fixed dollar amount. This ensures compensation is tied to actual mining output lost.
+  </Card>
+  <Card title="Valued by day's hashprice" icon="activity">
+    The dollar value of credited TH/s is determined by the hashprice on the day the event occurs, reflecting real-time market conditions.
+  </Card>
+  <Card title="Auto-applied to invoice" icon="file-text">
+    Credits are automatically applied to your next billing cycle. No forms, no tickets, no waiting.
+  </Card>
+  <Card title="Seller-defined thresholds" icon="clock">
+    Each seller sets their own thresholds for what constitutes "degraded" versus "offline" status. Credit caps also vary by seller and contract. Review your contract addendum for exact limits.
+  </Card>
+</CardGroup>
+
+## What is covered
+
+<CardGroup cols={2}>
+  <Card title="Covered" icon="circle-check">
+    - Equipment underperformance below the contract threshold
+    - Unplanned downtime events
+    - Hardware failures affecting hashrate output
+  </Card>
+  <Card title="Not covered" icon="circle-x">
+    - Scheduled curtailment events
+    - Planned maintenance and repair windows
+    - Monitoring agent offline periods
+    - Network-wide events outside the seller's control
+  </Card>
+</CardGroup>
+
+<Warning>
+  Each seller defines their own HashGuard terms, including performance thresholds, exclusion periods, and credit caps. Review your specific contract's HashGuard addendum for exact coverage details before purchasing.
+</Warning>
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="What triggers a HashGuard event?">
+    A HashGuard event is triggered when your equipment's hashrate drops below the performance threshold defined in your hosting contract. Each seller sets their own thresholds for what constitutes "degraded" versus "offline" status. You do not need to report the event — it is detected automatically from monitoring data.
+  </Accordion>
+  <Accordion title="How are credits calculated?">
+    Credits are issued in TH/s based on the difference between your contracted hashrate and the actual output during the event. The dollar value is determined by multiplying the credited TH/s by the hashprice on the day the event occurs. For example, if your contracted hashrate is 100 TH/s and your equipment delivers 40 TH/s for 12 hours, you receive credit for 60 TH/s × 0.5 days at that day's hashprice.
+  </Accordion>
+  <Accordion title="Are there caps on credits?">
+    Yes. Credit caps vary by seller and are defined in your specific contract's HashGuard terms. Review your contract addendum for the exact per-event and total cap that applies to your agreement.
+  </Accordion>
+  <Accordion title="How long until I receive my credit?">
+    Credits accrue in real time during an active HashGuard event and are applied automatically to your next invoice at the end of the billing cycle. There is no manual processing step and no waiting period beyond the normal billing cycle.
+  </Accordion>
+  <Accordion title="Can I see my HashGuard history?">
+    Yes. Your customer dashboard includes a full HashGuard event log. Each event entry shows its duration, credited TH/s, the hashprice used for valuation, and the resulting invoice credit amount.
+  </Accordion>
+  <Accordion title="What happens during curtailment?">
+    HashGuard credits do not apply during scheduled curtailment events. Curtailment is a planned operational decision and is excluded from service credit eligibility. Only unplanned performance drops trigger credits.
+  </Accordion>
+  <Accordion title="Do credits apply when the monitoring agent is offline?">
+    No. Credits require active monitoring data. If the seller's site monitoring agent is non-operational, the system cannot verify equipment performance and credits will not accrue during that period.
+  </Accordion>
+</AccordionGroup>
+
+## Finding HashGuard-protected listings
+
+Not all marketplace listings include HashGuard. Look for the green **HashGuard** shield badge on listing cards. You can also filter to show only protected listings:
+
+- On the main marketplace browse page, enable the **HashGuard** filter
+- Or navigate directly to `/marketplace/home?hashguard=true`
+
+On a listing detail page, the HashGuard badge appears in the header badge row. Hash contract listings with HashGuard also display it as a benefit in the listing description panel.
+
+## For hosts: enabling HashGuard
+
+If you operate a hosting facility, you can offer HashGuard on your marketplace listings as a competitive differentiator.
+
+<Steps>
+  <Step title="Configure per-contract thresholds">
+    In your HostOS dashboard, set the hashrate percentage that defines "degraded" and "offline" status for each contract. You can also set credit caps and exclusion rules. Different contracts can have different thresholds.
+  </Step>
+  <Step title="Enable monitoring">
+    HashGuard requires your site agent to be running and reporting data. Monitoring is continuous and fully automated once the agent is online.
+  </Step>
+  <Step title="Enable on listings">
+    When creating or editing a listing, toggle **HashGuard** on and set the monthly HashGuard cost (if you charge buyers a fee for the coverage). This fee is added to the listing price at checkout.
+  </Step>
+  <Step title="Monitor via analytics">
+    Your HostOS HashGuard analytics dashboard shows all events across your fleet: event duration, credited TH/s, compensation issued, and per-equipment health grades (A through F based on uptime and event history).
+  </Step>
+</Steps>
+
+**Benefits of offering HashGuard:**
+
+- Customers stay longer when downtime is automatically compensated — HashGuard turns a negative experience into a trust-building moment
+- HashGuard-protected listings differentiate your facility and support premium pricing
+- Credits auto-apply to invoices with no manual calculations or support tickets
+- Full visibility into fleet health grades and total compensation issued from your HostOS analytics dashboard
+
+<Note>
+  If the monitoring agent goes offline, credits do not accrue during that period. This protects you from false credit claims caused by data gaps.
+</Note>

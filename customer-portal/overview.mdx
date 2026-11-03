@@ -1,0 +1,91 @@
+---
+title: "Overview"
+description: "Your self-service dashboard for monitoring hosted mining equipment, tracking earnings, and managing payments — all in one place."
+---
+
+The Customer Portal is a branded, self-service dashboard that your hosting provider gives you access to. You can monitor every miner you have hosted at their facility, see your Bitcoin earnings in real time, view invoices, make payments, and open support tickets — without needing to contact your host for routine information.
+
+## Accessing the portal
+
+Your hosting provider will send you a login link. It may be a branded URL (for example, `acme.dunedigital.xyz` or `yourhostingco.com/portal`), or you can log in directly at [dunedigital.xyz](https://dunedigital.xyz) if your host uses the default domain.
+
+<Steps>
+  <Step title="Open your invite link">
+    Click the link in the welcome email from your hosting provider. It takes you directly to the login screen for their portal.
+  </Step>
+  <Step title="Sign in">
+    Enter the email address and password your host set up for you, or use the magic-link option if your host enabled it.
+  </Step>
+  <Step title="Review your dashboard">
+    After signing in, you land on your home screen. If you have hosted equipment, you see a live count of operational miners. If you have O&M contracts, you see cards for each managed site.
+  </Step>
+</Steps>
+
+<Note>
+  If you have equipment hosted across more than one provider, each provider has its own portal login. You cannot merge accounts across hosting organizations.
+</Note>
+
+## What you can do in the portal
+
+<CardGroup cols={2}>
+  <Card title="Equipment and earnings" icon="cpu" href="/customer-portal/equipment-earnings">
+    View live hashrate, power draw, and status for every miner. Drill into individual units for board-level stats, temperatures, and pool connections. Track daily, weekly, and monthly Bitcoin earnings.
+  </Card>
+  <Card title="Payments and wallet" icon="credit-card" href="/customer-portal/payments-wallet">
+    View and pay monthly invoices from your host. Pay by ACH bank transfer, credit card, Bitcoin, or stablecoin. Configure the wallet address where your mining earnings are sent.
+  </Card>
+  <Card title="HashGuard" icon="shield-check">
+    See which of your miners have HashGuard protection enabled. When a miner goes offline or underperforms, HashGuard injects replacement hashrate and accrues a credit that your host applies to your next invoice.
+  </Card>
+  <Card title="Alerts" icon="bell">
+    Create automated alerts for hashrate drops, offline events, temperature spikes, and efficiency changes. Receive notifications by email, Telegram, or webhook.
+  </Card>
+  <Card title="Contracts" icon="file-text">
+    Review your active hosting agreements — term dates, power rates, connector fees, billing method, and which equipment is covered.
+  </Card>
+  <Card title="Support" icon="headphones">
+    Open support tickets directly in the portal. Your host's team receives them instantly. An AI assistant is also available for common questions around the clock.
+  </Card>
+</CardGroup>
+
+## Two portal modes
+
+The portal adapts based on the type of contract your host has set up for you.
+
+<Tabs>
+  <Tab title="Hosting portal">
+    The **Hosting Portal** is for customers who have physical or virtual mining equipment hosted at a facility. You see:
+
+    - A live equipment list with hashrate, power, status, and uptime for every assigned miner
+    - Earnings dashboards showing gross and net Bitcoin per settlement period
+    - Monthly invoices with power and hosting fees
+    - HashGuard protection status and compensation credits
+    - Alerts, contracts, marketplace access, and support tickets
+  </Tab>
+  <Tab title="O&M portal">
+    The **Operations and Maintenance (O&M) Portal** is for customers who own a mining site and have contracted a host to operate it on their behalf. You see:
+
+    - Site cards for each facility under management
+    - Power performance dashboards: consumption, efficiency, and cost
+    - Mining performance dashboards: fleet hashrate and uptime
+    - Cooling performance dashboards: CDU status, coolant temperatures
+    - A geographic map view of your sites
+    - Automated O&M reports and invoices
+
+    <Note>
+      If your account has both hosted equipment and O&M contracts, the portal shows both. O&M site cards appear at the top of your home screen, and your hosted equipment is accessible from the **Equipment** section.
+    </Note>
+  </Tab>
+</Tabs>
+
+## Home screen at a glance
+
+When you log in, the home screen shows a real-time summary banner with the number of miners currently operational out of your total assigned count (for example, `14 / 15 operational`). Below that, quick-access cards surface the features most relevant to your contract type.
+
+<Tip>
+  The banner dismisses after you acknowledge it. To see the live operational count again, navigate to **Equipment** in the sidebar.
+</Tip>
+
+## AI-powered support chat
+
+An AI assistant is available in the portal at all times. It can answer common questions about how billing works, explain hashrate terms, help you interpret earnings data, and route you to a support ticket if a question requires human review from your host.

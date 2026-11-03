@@ -1,0 +1,99 @@
+---
+title: "AI Streams"
+description: "AI Streams is Dune Digital's GPU cluster operations platform — the companion product to Hash Streams for teams running GPU-based compute workloads."
+---
+
+## What is AI Streams?
+
+AI Streams is a GPU cluster monitoring and management platform built on the same Streams infrastructure as Hash Streams. Where Hash Streams is designed around ASIC miners, AI Streams is purpose-built for GPU nodes: it monitors cluster health, manages workload scheduling, optimizes power draw, and provides usage analytics for AI/ML training runs, inference deployments, rendering farms, and GPU mining operations.
+
+Both products share the same agent architecture, the same data pipeline, and the same platform account. If you run both ASIC miners and GPU clusters you manage them from a single dashboard.
+
+## Key features
+
+<CardGroup cols={2}>
+  <Card title="Cluster monitoring" icon="activity">
+    Live visibility into GPU utilization, VRAM usage, temperature, power draw, fan speed, and NVLink / PCIe health for every node in your cluster. Dashboard refreshes on the same 50-second polling cycle as Hash Streams.
+  </Card>
+  <Card title="Workload management" icon="server">
+    Track active jobs, queued workloads, and job history. Associate resource consumption with specific training runs or inference deployments for accurate cost attribution.
+  </Card>
+  <Card title="Power optimization" icon="zap">
+    Apply power limits per GPU or per node based on grid conditions. Integrates with the same curtailment signal pipeline as Hash Streams — a single demand response event can curtail both your ASIC miners and your GPU cluster simultaneously.
+  </Card>
+  <Card title="Node scaling" icon="network">
+    Monitor cluster capacity and track node availability over time. Flag nodes that are offline, degraded, or suspended, and view uptime trends for capacity planning.
+  </Card>
+  <Card title="Job queue" icon="clock">
+    View the current job queue, identify bottlenecks, and see throughput metrics per GPU model or node. Useful for identifying underutilized hardware.
+  </Card>
+  <Card title="Usage analytics" icon="bar-chart-3">
+    Per-node and per-GPU usage reports with energy consumption, average utilization, and cost attribution. Export data for billing or infrastructure planning.
+  </Card>
+</CardGroup>
+
+## Use cases
+
+<AccordionGroup>
+  <Accordion title="AI/ML training">
+    Monitor long-running training jobs across multi-GPU and multi-node setups. Track GPU utilization, VRAM headroom, and power draw in real time. Set up event rules to alert you if a training job stalls or a GPU goes offline mid-run.
+  </Accordion>
+  <Accordion title="Inference deployment">
+    Track GPU utilization and latency for inference workloads. Identify nodes that are overloaded or underutilized and rebalance accordingly.
+  </Accordion>
+  <Accordion title="Rendering farms">
+    Monitor GPU utilization across render farm nodes. Track job completion times and hardware health to minimize render farm downtime.
+  </Accordion>
+  <Accordion title="GPU mining">
+    Use AI Streams to monitor GPU-based mining rigs the same way Hash Streams monitors ASIC fleets — with live hashrate, temperature, power draw, and automated curtailment when power prices spike.
+  </Accordion>
+</AccordionGroup>
+
+## How AI Streams relates to Hash Streams
+
+Both products are part of the Dune Digital **Streams** platform:
+
+| | Hash Streams | AI Streams |
+|---|---|---|
+| **Compute type** | ASIC miners (SHA-256, Scrypt, etc.) | GPU nodes (NVIDIA, AMD) |
+| **Primary use** | Bitcoin / altcoin mining operations | AI/ML, rendering, GPU mining |
+| **Agent** | Same binary, configured for ASIC scanning | Same binary, configured for GPU/CUDA discovery |
+| **Curtailment** | Stops or throttles ASICs | Throttles GPU power limits or pauses jobs |
+| **Dashboard** | Mining control, PDU control, earnings | Cluster monitor, job queue, usage analytics |
+| **Pricing** | Pay As You Go or Business | Pay As You Go or Business |
+
+If you already use Hash Streams, you can add AI Streams to the same account and manage both from the same organization and billing setup.
+
+## Getting started with AI Streams
+
+The setup process mirrors Hash Streams:
+
+<Steps>
+  <Step title="Create a site (or reuse an existing one)">
+    AI Streams sites work the same as Hash Streams sites. If your GPU cluster is co-located with your ASIC miners, you can use the same site and deploy a second agent configured for GPU discovery.
+  </Step>
+  <Step title="Download and install the agent">
+    Download the agent from **Infrastructure → Agents → Download agent** in your dashboard. The same agent binary supports both ASIC and GPU monitoring — the mode is configured through the agent's network segment settings.
+  </Step>
+  <Step title="Register the agent">
+    Generate a registration token from **Infrastructure → Agents**, same as Hash Streams. The token binds the agent to your organization and site.
+  </Step>
+  <Step title="Configure GPU network segments">
+    Add network segments pointing at the subnets where your GPU nodes are reachable. The agent will discover nodes and begin reporting telemetry.
+  </Step>
+</Steps>
+
+## Pricing
+
+AI Streams uses the same usage-based pricing as Hash Streams — you pay for the telemetry data your agent uploads.
+
+| Plan | Base price | Data rate |
+|---|---|---|
+| Pay As You Go | $0 / month | $0.018 / MB |
+| Business | $149 / month | $0.015 / MB |
+
+Both plans include 200 MB of welcome credits. The Business plan unlocks automated curtailment (including GPU power throttling), unlimited agents, advanced analytics, and priority support.
+
+<Note>
+  AI Streams is currently in active development. Some features listed here may be in preview. Contact [sales](https://dunedigital.xyz/contact) for early access or to discuss enterprise deployments.
+</Note>

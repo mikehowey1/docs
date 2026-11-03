@@ -1,0 +1,146 @@
+---
+title: "Curtailment"
+description: "Automatically reduce your mining load in response to electricity prices, demand response events, or custom schedules — and restore it when conditions improve."
+---
+
+## What is curtailment?
+
+Curtailment is the process of reducing or halting mining load to lower your electricity consumption during periods when power is expensive or when you are responding to a grid demand response event. Hash Streams automates this process: when a trigger condition is met, the platform selects which miners to stop (or put into low-power mode) and queues the commands through your site agent.
+
+When conditions improve, Hash Streams automatically issues restore commands to bring miners back online.
+
+## Curtailment modes
+
+Hash Streams supports three curtailment modes:
+
+<CardGroup cols={3}>
+  <Card title="Manual" icon="hand">
+    You initiate a curtailment event from the dashboard by choosing a template, selecting miners, and sending the plan to the agent. Useful for planned maintenance windows or manual demand response.
+  </Card>
+  <Card title="Scheduled" icon="calendar">
+    Define recurring curtailment windows based on time of day or day of week. The compliance monitor triggers events automatically at the scheduled time.
+  </Card>
+  <Card title="Automated" icon="zap">
+    The platform receives an external signal (price spike, DR event, or webhook) and automatically resolves which miners to curtail based on your configured template. Requires the Business plan.
+  </Card>
+</CardGroup>
+
+<Note>
+  Advanced curtailment automation (automated signals and demand response integrations) is available on the **Business** plan. Manual and scheduled curtailment are available on all plans.
+</Note>
+
+## The site control page
+
+Navigate to **Operations → Site Control** to manage curtailment for the selected site. The page has four tabs:
+
+| Tab | Purpose |
+|---|---|
+| **Overview** | Live curtailment status, active execution monitor, agent and provider health, and manual curtailment controls |
+| **Simulate & Test** | Run a dry-run or full simulation before committing to a live event |
+| **Schedule & History** | Create scheduled events, view analytics, browse the audit log, and replay past events |
+| **Settings** | Manage templates, behavior configuration, AI suggestions, energy contract data, and troubleshooting |
+
+## Curtailment templates
+
+A template defines what happens when a curtailment event fires:
+
+- **Strategy code** — Identifies the curtailment strategy (e.g., `EFFICIENCY_FIRST`, `PROPORTIONAL`, `ai_suggest`)
+- **Trigger type** — What kind of signal activates the template (`price`, `dr_event`, `power`, `schedule`, `manual`)
+- **Target selector** — Which miners are selected: `all`, `by_efficiency` (least efficient first), `by_hashrate`, or `proportional_percentage`
+- **Thresholds** — Price or percentage thresholds that map to a curtailment level (0–100) and action (`sleep`, `low_power`, `none`)
+- **Ramp down / ramp up** — Minutes to phase commands in and out to avoid sudden load changes
+- **PDU control** — Whether to also toggle PDU outlets for curtailed miners
+- **Default duration** — How long to sustain the curtailment before auto-restoring (if no end signal arrives)
+
+Manage templates under **Site Control → Settings → Templates**.
+
+## Curtailment thresholds
+
+Thresholds map an incoming signal value to a curtailment action. For a price-triggered template you might define:
+
+| LMP price ($/MWh) | Curtailment level | Action |
+|---|---|---|
+| < 50 | 0% | none (keep running) |
+| 50–100 | 50% | low_power on half the fleet |
+| > 100 | 100% | sleep all eligible miners |
+
+The platform evaluates thresholds when a signal arrives and selects the matching level. The `by_efficiency` target selector then picks miners starting with the least efficient, so your best-performing machines continue hashing as long as possible.
+
+## Per-miner curtailment participation
+
+Every miner has a curtailment participation setting that overrides the site default:
+
+| Setting | Behavior |
+|---|---|
+| **Inherit** | Follows the site-level default (stop or keep running) |
+| **Always curtail** | Always included in curtailment events, regardless of site default |
+| **Protected** | Never curtailed — always keeps running |
+
+You can set participation on individual miners from the Mining Control table, or apply it in bulk by selecting multiple miners and using the bulk action menu.
+
+Network segments also have a curtailment participation setting. If a miner's individual setting is `inherit`, the segment setting applies. If the segment is also `inherit`, the site default applies.
+
+## Demand response integrations
+
+On the Business plan you can connect external demand response providers that send curtailment signals automatically.
+
+<AccordionGroup>
+  <Accordion title="Voltus">
+    Voltus sends JSON webhook payloads for DR events. Configure your Voltus account to send event notifications to your Dune Digital curtailment webhook URL. Map the Voltus provider code to a curtailment template in **Site Control → Settings → Templates**.
+
+    When a Voltus DR event arrives, the platform automatically resolves which miners to curtail based on your configured template and fires the execution plan through your site agent. Restore signals arrive when the DR event ends and miners are automatically brought back online.
+  </Accordion>
+  <Accordion title="CPower">
+    CPower integration works similarly to Voltus — configure the provider in the Integrations page and link it to a curtailment template. Signals are deduplicated by `external_event_id` so retries do not trigger duplicate curtailment events.
+  </Accordion>
+  <Accordion title="Generic DR webhook">
+    For any other provider or custom automation, use the generic curtailment webhook endpoint. The endpoint accepts a JSON payload containing your site ID, provider code, signal type, action (`curtail` or `restore`), and time window. Authenticate using your curtailment API key in the `X-API-Key` request header.
+
+    The curtailment webhook URL and your API key are available from **Site Control → Settings → Integrations** in the dashboard. To restore before the scheduled end time, send a `restore` action with the same event ID as the original curtailment signal.
+  </Accordion>
+</AccordionGroup>
+
+## AI curtailment suggestions
+
+The AI Suggestions panel (under **Settings → AI Suggestions**) analyzes your fleet's efficiency profile and current energy contract to recommend optimal curtailment thresholds. Click **Apply thresholds** to load the suggested thresholds into the simulation panel and test them before saving as a template.
+
+## Simulating a curtailment event
+
+Before running a live curtailment, use the **Simulate & Test** tab to validate your configuration:
+
+<Steps>
+  <Step title="Select a template">
+    Choose from your saved templates or load the AI-suggested strategy.
+  </Step>
+  <Step title="Choose simulation mode">
+    - **Simulation** — Client-side only. No database writes, no agent commands. Shows which miners would be selected and the projected impact.
+    - **Dry-run** — Sends a test signal through the full server pipeline but does not command the agent. Records the plan in the audit log with `is_simulation: true`.
+    - **Send to agent** — Executes a real curtailment plan.
+  </Step>
+  <Step title="Review the execution plan">
+    The execution plan view shows the resolved list of target miners with their IP addresses, expected actions, ramp-down phasing, and PDU targets (if PDU control is enabled). Review the plan before confirming.
+  </Step>
+</Steps>
+
+## Scheduling curtailment
+
+Navigate to **Schedule & History** to create a recurring curtailment schedule. Each scheduled event specifies:
+
+- Template to use
+- Start time and end time (in the site's time zone)
+- Recurrence (one-time, daily, weekly)
+
+The compliance monitor checks for scheduled events and fires the curtailment signal automatically at the scheduled start time.
+
+## Viewing curtailment history
+
+The **Schedule & History** tab contains:
+
+- **Active event monitor** — Live view of an in-progress curtailment execution, showing command progress and affected miner count
+- **Analytics dashboard** — Charts of curtailment frequency, duration, and miners affected over time
+- **Audit log** — Immutable record of every curtailment event with trigger source, template used, targets resolved, and outcome
+- **Replay** — Step through a past event's execution sequence to understand what happened and when
+
+<Tip>
+  Use the replay feature when investigating why a specific miner was or was not included in a curtailment event. The replay shows the exact participation resolution logic applied at the time the event ran.
+</Tip>

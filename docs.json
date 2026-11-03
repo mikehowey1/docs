@@ -1,0 +1,97 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "Dune Digital",
+  "theme": "almond",
+  "logo": {
+    "light": "https://ulokbjsxkqlbgmlzopeu.supabase.co/storage/v1/object/public/brand/4b0bb71c-a64f-43f7-8ce6-c35a3895bdd3/host-logo.svg",
+    "dark": "https://ulokbjsxkqlbgmlzopeu.supabase.co/storage/v1/object/public/brand/4b0bb71c-a64f-43f7-8ce6-c35a3895bdd3/host-logo.svg"
+  },
+  "favicon": "https://ulokbjsxkqlbgmlzopeu.supabase.co/storage/v1/object/public/brand/4b0bb71c-a64f-43f7-8ce6-c35a3895bdd3/host-logo.svg",
+  "colors": {
+    "primary": "#e55b6b",
+    "light": "#6767e3",
+    "dark": "#0c0c0c"
+  },
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/DuneDigital-xyz/dune-digital"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "account-setup"
+            ]
+          },
+          {
+            "group": "Platform",
+            "pages": [
+              "platform/overview",
+              "platform/pricing",
+              "platform/organizations"
+            ]
+          },
+          {
+            "group": "Hash Streams",
+            "pages": [
+              "hash-streams/overview",
+              "hash-streams/site-setup",
+              "hash-streams/fleet-management",
+              "hash-streams/curtailment",
+              "hash-streams/event-rules",
+              "hash-streams/ai-streams"
+            ]
+          },
+          {
+            "group": "Host OS",
+            "pages": [
+              "host-os/overview",
+              "host-os/customer-management",
+              "host-os/contracts-billing",
+              "host-os/white-label"
+            ]
+          },
+          {
+            "group": "Marketplace",
+            "pages": [
+              "marketplace/overview",
+              "marketplace/buying",
+              "marketplace/selling",
+              "marketplace/hashguard"
+            ]
+          },
+          {
+            "group": "Customer Portal",
+            "pages": [
+              "customer-portal/overview",
+              "customer-portal/equipment-earnings",
+              "customer-portal/payments-wallet"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Operations",
+            "pages": [
+              "guides/setup-first-site",
+              "guides/onboard-customers",
+              "guides/configure-alerts",
+              "guides/manage-payments"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

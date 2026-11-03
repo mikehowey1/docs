@@ -1,0 +1,245 @@
+---
+title: "Manage payments"
+description: "How invoicing, payment collection, and payouts work for hosting providers and hosted customers."
+---
+
+<Tabs>
+  <Tab title="Hosting providers">
+
+## For hosting providers (Host OS)
+
+### Generating invoices
+
+Invoices are generated monthly for each active contract. You can trigger generation manually or run a batch for all customers at once.
+
+**Manual generation — single customer:**
+
+1. Navigate to **Host OS → Invoices** and click **Generate Invoices**.
+2. Preview the invoice line items for the selected customer and billing period.
+3. Click **Issue Invoice** to finalize and send.
+
+**Batch generation — all customers:**
+
+<Steps>
+  <Step title="Open batch generation">
+    On the Invoices page, click **Run Batch Generation**.
+  </Step>
+
+  <Step title="Configure the batch">
+    In the dialog that appears:
+
+    - **Billing Period** — select the calendar month to invoice (e.g., March 2025)
+    - **Customer** — choose **All Customers** or a specific customer
+    - **Skip customers with existing invoices** — keeps enabled to avoid generating duplicates for customers who already have an issued, pending, or paid invoice for the period
+  </Step>
+
+  <Step title="Review auto-send setting">
+    The dialog shows whether auto-send is enabled for your organization:
+
+    - **Auto-send on** — invoices are emailed to customers immediately on generation
+    - **Auto-send off** — invoices are created as drafts; you review and send them manually
+
+    To change this setting, go to **Host OS → Settings → Billing**.
+  </Step>
+
+  <Step title="Run the batch">
+    Click **Preview (1 Invoice)** to generate a single invoice first and review the output before committing the full batch. When you're satisfied, click **Generate All**.
+
+    The batch runs in the background. The invoice list refreshes automatically when the job completes.
+  </Step>
+</Steps>
+
+### Invoice statuses
+
+| Status | Meaning |
+|---|---|
+| **Draft** | Not yet sent to the customer |
+| **Issued** | Sent and awaiting payment |
+| **Paid** | Payment received in full |
+| **Overdue** | Past due date with no payment |
+| **Held** | Customer is in default or has a billing hold — not emailed |
+| **Written Off** | Debt forgiven |
+| **Cancelled** | Invoice voided |
+
+You can update the status of one or more invoices in bulk from the invoices table using the **Set Status** dropdown.
+
+### Reviewing an invoice before sending
+
+Click any invoice in the list to open the **Invoice Detail** dialog. Review:
+
+- Line items and the billing method used (metered kWh, calculated, or hash-derived)
+- kWh total and the variance percentage compared to PDU meter readings (shown color-coded: green < 5%, yellow < 20%, red ≥ 20%)
+- Taxes, discounts, and credits applied
+
+Edit any line items that need adjustment before sending.
+
+### Accepting payment
+
+Customers pay through the Customer Portal. The platform supports:
+
+<CardGroup cols={2}>
+  <Card title="ACH bank transfer" icon="building-2">
+    No fee. Bank account linked via Plaid. Recommended for recurring monthly payments. Enable ACH on your organization in **Settings → Billing**.
+  </Card>
+  <Card title="Credit card" icon="credit-card">
+    Processing fee applies (passed to the customer or absorbed, depending on your settings). Processed via Stripe.
+  </Card>
+  <Card title="Bitcoin" icon="bitcoin">
+    Small network fee. Processed via NowPayments. Converted to your settlement currency automatically.
+  </Card>
+  <Card title="USDC / USDT" icon="banknote">
+    Small network fee. Processed via NowPayments. Stablecoin payments settle to your account without conversion volatility.
+  </Card>
+</CardGroup>
+
+### Setting up auto-pay for customers
+
+Customers can enable auto-pay from their portal once they have a payment method on file. When auto-pay is active, outstanding invoices are charged automatically on the due date.
+
+To check whether a specific customer has auto-pay configured, open the customer detail page and go to the **Billing** tab.
+
+### Handling failed payments and delinquent accounts
+
+When a payment fails:
+
+1. The platform automatically retries the charge on a schedule.
+2. If retries are exhausted, the invoice status moves to **Overdue**.
+3. RevenueGuard flags the customer account. Future invoices are generated with **Held** status and are not emailed until the outstanding balance is resolved.
+
+To manually resolve a delinquent account:
+1. Navigate to the customer detail page → **Billing** tab.
+2. Apply a credit, write off the balance, or mark the invoice as paid after collecting out-of-band.
+3. Re-enable normal billing by clearing the hold in **Account Settings**.
+
+### Viewing financials and payouts
+
+Navigate to **Host OS → Financials** to see your financial position for any period.
+
+Use the period selector to view **Monthly**, **Quarterly**, or **Yearly** summaries. The current period shows projected month-end estimates based on elapsed time.
+
+The financials dashboard includes:
+
+- **Revenue tab** — Gross revenue, net revenue, and a breakdown by billing method
+- **Expenses tab** — Energy COGS (using per-site rates), platform fees, and discounts/credits applied
+- **Receivables tab** — Aging schedule showing how much is current, 30-, 60-, and 90-days overdue
+- **Tax tab** — Sales tax collected, use tax liability, and marketplace sales tax
+
+You can add manual entries (one-time adjustments, repairs income, deposits) directly from the Financials page using **Add Manual Entry**.
+
+  </Tab>
+
+  <Tab title="Hosted customers">
+
+## For hosted customers (Customer Portal)
+
+### Viewing your invoice
+
+Navigate to **Billing → Invoices** to see all invoices your hosting provider has issued to you.
+
+Click any invoice to view:
+
+- The billing period it covers
+- Line items showing energy consumption (kWh) and rate ($/kWh)
+- Taxes and any credits applied
+- The total amount due and the due date
+
+You can download a PDF copy of any invoice for your records.
+
+### Paying with ACH (bank transfer)
+
+ACH is the recommended payment method — it has no transaction fee and integrates directly with your bank account.
+
+<Steps>
+  <Step title="Open the Payments page">
+    Navigate to **Payments** in the Customer Portal.
+  </Step>
+
+  <Step title="Link your bank account">
+    In the **Bank Accounts** section, click **Link Bank Account**. This opens a Plaid connection window where you log in to your bank and authorize the link.
+
+    <Note>
+      Plaid uses read-only access to verify your account — it cannot initiate transactions without a separate authorization.
+    </Note>
+  </Step>
+
+  <Step title="Authorize the payment">
+    Once your bank account is linked, open the invoice you want to pay and select **Pay with ACH**. Confirm the amount and authorize the debit.
+
+    Standard ACH transfers settle in 1–3 business days. Same-day ACH is available with an additional fee.
+  </Step>
+</Steps>
+
+### Paying with card (Stripe)
+
+<Steps>
+  <Step title="Open the invoice">
+    Navigate to **Billing → Invoices** and open the invoice you want to pay.
+  </Step>
+
+  <Step title="Select card payment">
+    Click **Pay with Card**. You are redirected through a secure Stripe checkout page (hosted at `checkout.stripe.com`).
+  </Step>
+
+  <Step title="Enter card details and confirm">
+    Enter your card number, expiry, and CVV. Click **Pay** to complete the transaction. You are returned to the portal once payment is confirmed.
+
+    <Note>
+      Card payments include a processing fee. The fee amount is shown before you confirm payment. There is a per-transaction maximum for card payments — for larger invoices, ACH or crypto is recommended.
+    </Note>
+  </Step>
+</Steps>
+
+### Paying with crypto (Bitcoin and stablecoins)
+
+Crypto payments are processed via NowPayments. The platform supports Bitcoin, USDC, and USDT.
+
+<Steps>
+  <Step title="Open the invoice">
+    Navigate to **Billing → Invoices** and open the invoice.
+  </Step>
+
+  <Step title="Select crypto payment">
+    Click **Pay with Crypto** and choose your preferred currency (Bitcoin, USDC, or USDT).
+
+    The platform opens a secure checkout session (hosted at `pay.nowpayments.io`). You will see:
+    - The exact amount due in the selected cryptocurrency (calculated at the current exchange rate)
+    - A payment address and QR code to send funds to
+    - A countdown timer for the exchange rate lock period
+  </Step>
+
+  <Step title="Send the payment">
+    Send the exact amount shown to the provided address from your wallet before the rate lock expires.
+
+    <Warning>
+      Send the exact amount specified. Underpayments may not be credited automatically and require manual reconciliation by your hosting provider.
+    </Warning>
+  </Step>
+
+  <Step title="Wait for confirmation">
+    Bitcoin transactions typically confirm within 10–30 minutes depending on network fees. USDC and USDT on supported networks confirm faster. The invoice status updates to **Paid** once the blockchain confirms the transaction.
+  </Step>
+</Steps>
+
+### Setting up auto-pay
+
+Once you have a payment method on file, enable auto-pay so invoices are paid automatically on the due date.
+
+1. Navigate to **Billing → Payment Settings**.
+2. Select your preferred auto-pay method (ACH is recommended for zero transaction fees).
+3. Toggle **Auto-pay** to enabled and confirm.
+
+You will receive an email confirmation before each auto-pay charge is processed.
+
+### Wallet top-up and balance
+
+If your hosting provider has enabled wallet-based billing, you can maintain a pre-paid balance in your account. Invoices are deducted from your balance automatically.
+
+To top up:
+1. Navigate to **Billing → Wallet**.
+2. Enter the amount and select a funding method (ACH, card, or crypto).
+3. Confirm the deposit. Funds are credited to your balance immediately (ACH top-ups may take 1–3 business days to clear).
+
+Your current wallet balance is shown at the top of the Billing page. You can set a low-balance notification threshold to be alerted when your balance falls below a set amount.
+
+  </Tab>
+</Tabs>

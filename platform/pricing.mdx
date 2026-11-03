@@ -1,0 +1,120 @@
+---
+title: Pricing
+description: Dune Digital offers two plans — Pay As You Go and Business — with usage-based data pricing and optional add-ons for hosting, curtailment, PDU control, and more.
+---
+
+Dune Digital uses a hybrid pricing model: a flat monthly base fee (or $0 on Pay As You Go) plus a small per-megabyte charge for the telemetry data your agents send to the platform. You control data volume by adjusting your agent's polling frequency.
+
+Both plans include **200 MB of free welcome credits** when you create your account.
+
+## Plans
+
+<CardGroup cols={2}>
+  <Card title="Pay As You Go" icon="zap">
+    **$0/month base** — No subscription fee. You pay only for data usage at **$0.018 per MB**. Supports up to 3 agents, 1,550 miners, 65 PDUs, 1 site, and 7-day data retention. No credit card required to start.
+  </Card>
+  <Card title="Business" icon="building-2">
+    **$149/month** (or **$124/month** billed annually). Reduced data rate at **$0.015 per MB**. Unlimited agents, sites, miners, and PDUs. 90-day data retention. Up to 25+ team members. Includes advanced curtailment, priority support, and dedicated onboarding.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Annual billing follows a **pay for 10 months, get 12** model — roughly 17% off the monthly rate. The Business plan drops from $149/mo to $124/mo on annual billing.
+</Tip>
+
+## Plan comparison
+
+| | Pay As You Go | Business |
+|---|---|---|
+| **Base price** | $0/mo | $149/mo (or $124/mo annual) |
+| **Data rate** | $0.018/MB | $0.015/MB |
+| **Welcome credits** | 200 MB | 200 MB |
+| **Data retention** | 7 days | 90 days |
+| **Site agents** | Up to 3 | Unlimited |
+| **Miners per agent** | Up to 1,000 | Unlimited |
+| **Total miners** | Up to 1,550 | Unlimited |
+| **PDUs** | Up to 65 | Unlimited |
+| **Sites** | 1 | Unlimited |
+| **Team members** | 1 | 25+ |
+| **Data segmentation** | — | ✓ |
+| **Real-time dashboard** | ✓ | ✓ |
+| **Equipment health** | ✓ | ✓ |
+| **Historical analytics** | 30 days | 90 days |
+| **Custom dashboards** | — | ✓ |
+| **Basic alerting** | ✓ | ✓ |
+| **Advanced curtailment** | — | ✓ |
+| **Scheduled operations** | — | ✓ |
+| **API access** | — | ✓ |
+| **Email support** | ✓ | ✓ |
+| **Priority support** | — | ✓ |
+| **Dedicated onboarding** | — | ✓ |
+| **Branded mobile app** | — | Add-on |
+
+## Add-ons
+
+Business plan subscribers can extend the platform with add-ons. Prices are billed monthly alongside your subscription (or at the discounted annual rate when billed annually).
+
+<CardGroup cols={2}>
+  <Card title="Hosting Management" icon="building-2">
+    Full hosting management, customer portal provisioning, and Host OS access. Includes the tools to run a hosting business on top of your mining operation.
+  </Card>
+  <Card title="Advanced Protocols" icon="cpu">
+    Whatsminer, LuxOS, and Braiins protocol support. Required if your fleet includes miners that use manufacturer-specific firmware APIs beyond standard ASIC protocols.
+  </Card>
+  <Card title="PDU/CDU Control" icon="power">
+    PDU and CDU control with per-port assignments. Lets you power-cycle individual miner outlets directly from the Hash Streams dashboard or curtailment rules.
+  </Card>
+  <Card title="Curtailment Automation" icon="trending-down">
+    Manual and automated curtailment management. Shut down or throttle miners in response to power pricing signals, schedules, or custom triggers — without manual intervention.
+  </Card>
+  <Card title="Team Collaboration" icon="users">
+    Team-based permissions for 3 or more members. Organize users into teams and assign site access at the team level rather than individually.
+  </Card>
+  <Card title="Third-party Integrations" icon="link">
+    Connect to QuickBooks, FreshBooks, and other accounting and business tools to sync invoices and financial data automatically.
+  </Card>
+  <Card title="White Label" icon="palette">
+    Branded mobile app (PWA) for your hosting customers. Your customers see your logo, colors, and domain — not Dune Digital branding.
+  </Card>
+  <Card title="API Access" icon="code">
+    REST API access for automation and custom integrations. Coming soon — pricing TBD.
+  </Card>
+  <Card title="Single Sign-On" icon="shield">
+    SAML/OIDC enterprise SSO. Coming soon — pricing TBD.
+  </Card>
+</CardGroup>
+
+<Note>
+  Add-ons are available on the Business plan only. Contact sales if you need custom pricing or bundled rates for multiple add-ons.
+</Note>
+
+## Understanding data usage
+
+Your data bill depends on how many miners you have, how often your agent polls them, and how much telemetry each miner sends per poll cycle.
+
+A rough estimate: a site with 100 miners polling every 3 minutes will typically consume around 5–15 MB per day depending on the metrics collected. The welcome credits (200 MB) cover a few weeks of typical operation while you evaluate the platform.
+
+You choose your agent's update frequency. Polling less frequently reduces data usage at the cost of lower time resolution in your dashboards and slower curtailment response.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What counts as data usage?">
+    Data usage is measured by the compressed telemetry payload that your site agents send to the platform. This includes hashrate, power draw, temperatures, error states, and other metrics from your miners. Dashboard views, API reads, and configuration changes do not count toward your data usage.
+  </Accordion>
+  <Accordion title="How do I estimate my monthly cost?">
+    Multiply your miner count by your polling interval to estimate daily telemetry volume, then multiply by 30 for a monthly figure. As a starting point, 100 miners polling every 3 minutes typically generates 5–15 MB/day, or $2.70–$8.10/month at the Pay As You Go rate. Use the welcome credits to calibrate your actual usage before committing to a plan.
+  </Accordion>
+  <Accordion title="Can I switch plans?">
+    Yes. You can upgrade from Pay As You Go to Business at any time. Downgrading follows your current billing period — you retain Business features through the end of the paid period, then revert to Pay As You Go limits.
+  </Accordion>
+  <Accordion title="What happens if I exceed my data budget?">
+    On Pay As You Go, usage is billed as it accumulates — there is no hard cutoff. On Business, overages are billed at the Business rate ($0.015/MB). You can set usage alerts in your organization's **Usage** tab to get notified before costs escalate.
+  </Accordion>
+  <Accordion title="Is there a contract?">
+    No. Monthly plans are billed month-to-month and can be cancelled at any time. Annual plans are prepaid for 10 months of service covering 12 months — the upfront payment is non-refundable after the billing period starts, but you can cancel renewal before the next annual cycle.
+  </Accordion>
+  <Accordion title="Do welcome credits expire?">
+    Welcome credits are applied to your account when you sign up and remain available until consumed. They apply to data usage charges on both Pay As You Go and Business plans.
+  </Accordion>
+</AccordionGroup>

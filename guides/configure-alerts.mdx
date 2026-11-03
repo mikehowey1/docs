@@ -1,0 +1,154 @@
+---
+title: "Configure alerts"
+description: "Set up event rules and smart alerts so you're notified when miners go offline, overheat, or drop below hashrate targets."
+---
+
+Dune Digital has two complementary alert systems:
+
+- **Event Rules** (Host OS / Hash Streams) — operator-configured rules that trigger actions across your fleet, such as sending a notification or firing a webhook when a threshold is crossed.
+- **Customer Smart Alerts** (Customer Portal) — per-customer alerts that hosted customers configure themselves to monitor their own equipment.
+
+---
+
+## Event rules (operator)
+
+Event rules run on a continuous schedule. When the defined condition is met for the sustained period you specify, the rule fires its configured actions.
+
+### Create an event rule
+
+<Steps>
+  <Step title="Open the event rules list">
+    Navigate to **Mining Control → Event Rules** (or **Hash Streams → Event Rules**) and click **Create Rule**.
+  </Step>
+
+  <Step title="Name and describe the rule">
+    Give the rule a clear name and an optional description. Both are visible in the rules table and in alert notifications, so use something that makes the problem obvious at a glance — for example, `Hashrate Below 90% — S19 Fleet`.
+
+    Set the **Severity**:
+    - **Warning** — informational, shown in yellow
+    - **Critical** — urgent, shown in red and triggers escalation if configured
+  </Step>
+
+  <Step title="Set the scope">
+    Choose which miners the rule applies to:
+
+    | Scope type | When to use |
+    |---|---|
+    | **All miners** | Apply to your entire fleet |
+    | **Site** | Apply to all miners at a specific site |
+    | **Network segment** | Apply to a specific subnet |
+    | **Specific equipment** | Apply to selected miners only |
+
+    You can also exclude individual pieces of equipment from a rule using the **Exclude Equipment** option.
+  </Step>
+
+  <Step title="Configure the trigger condition">
+    Choose the metric to monitor and the threshold that should trigger the rule:
+
+    <AccordionGroup>
+      <Accordion title="Hashrate below threshold">
+        Fires when a miner's hashrate falls below a percentage of its rated spec. For example, trigger when hashrate drops below 90% of the expected value for more than 5 minutes.
+      </Accordion>
+      <Accordion title="Miner offline">
+        Fires when a miner stops reporting data (status becomes `offline` or `lost`). Use a short sustained window (1–2 minutes) to catch reboots versus a longer window (15+ minutes) to catch genuine failures.
+      </Accordion>
+      <Accordion title="Temperature too high">
+        Fires when chip or board temperature exceeds a threshold. Normal operating range is 65–85°C; a threshold of 95°C gives headroom before thermal throttling.
+      </Accordion>
+      <Accordion title="Power anomaly">
+        Fires when a miner's measured power consumption deviates significantly from the expected draw based on its spec — useful for catching firmware issues or failing power supplies.
+      </Accordion>
+    </AccordionGroup>
+
+    Configure the **Sustained Minutes** setting — the condition must remain true for this duration before the rule fires. This prevents false positives from brief fluctuations.
+
+    Set the **Cooldown Minutes** — the minimum time that must pass before the rule can fire again for the same issue.
+
+    <Tip>
+      Recommended thresholds for a stable fleet:
+      - Hashrate: alert below **90%** of rated spec, sustained **5 minutes**, cooldown **15 minutes**
+      - Temperature: alert above **95°C**, sustained **3 minutes**, cooldown **10 minutes**
+      - Offline: alert after **10 minutes** offline, cooldown **30 minutes**
+    </Tip>
+  </Step>
+
+  <Step title="Configure actions">
+    Add one or more actions for the rule to perform when it fires:
+
+    | Action type | Description |
+    |---|---|
+    | **Email notification** | Sends an email to the configured recipients |
+    | **In-app notification** | Creates a notification in the Dune Digital dashboard |
+    | **Webhook** | Posts a JSON payload to your endpoint (e.g., PagerDuty, Slack, custom) |
+
+    For webhooks, provide the URL. Optionally provide a signing secret; the platform adds an `X-Alert-Signature` HMAC-SHA256 header so you can verify the payload on your server.
+  </Step>
+
+  <Step title="Save and enable the rule">
+    Click **Save**. New rules are enabled by default.
+
+    Back on the rules list you can:
+    - **Test** the rule (flask icon) — runs a dry-run to show how many miners are in scope and how many would trigger right now, without actually sending notifications
+    - **Snooze** — temporarily silence the rule for 1, 4, 8, or 24 hours (useful during maintenance)
+    - **Duplicate** — create a copy to use as a template for a similar rule
+    - **Enable / Disable** — toggle the rule on or off
+  </Step>
+</Steps>
+
+### Manage existing rules
+
+The rules table shows key statistics for each rule:
+
+- **Miners in scope** — how many miners the rule currently monitors
+- **Total triggers** — how many times the rule has fired in its lifetime
+- **Last triggered** — when the rule last fired
+- **Consecutive failures** — how many times the rule has errored internally (shown in red if above zero)
+
+Rules that exceed a consecutive failure limit are automatically disabled to prevent alert storms.
+
+---
+
+## Customer smart alerts (Customer Portal)
+
+Hosted customers can configure their own performance alerts from within the Customer Portal at **Alerts → Create Alert**.
+
+### What customers can configure
+
+Customers create **Smart Alerts** that monitor three metric types:
+
+| Metric | What it monitors | Default threshold |
+|---|---|---|
+| **Hashrate** | Performance vs. rated spec | ±10% of expected hashrate |
+| **Efficiency** | J/TH deviation | −15% / +30% of rated efficiency |
+| **Temperature** | Chip/board temperature | −10% / +15% of normal range |
+
+For each alert, customers configure:
+
+**Equipment scope** — which miners to monitor:
+- All equipment across all contracts
+- Equipment under a specific contract
+- A manually selected list of individual machines
+
+**Timing:**
+- **Delay before alerting** — how long the condition must persist before a notification is sent (0–60 minutes, in 5-minute steps). Setting a delay of 5 minutes avoids false positives from brief dips.
+- **Cooldown between alerts** — minimum time between repeat notifications for the same issue (30 minutes to 24 hours).
+- **Auto-reset** — when enabled, the alert clears automatically once values return to normal and stay there for a configurable duration.
+
+**Notification channels:**
+- **Email** — sent to the customer's registered email address
+- **Webhook** — JSON payload posted to a custom HTTPS endpoint. Customers can add an optional signing secret for HMAC-SHA256 verification. Use **Send Test Webhook** to verify the endpoint is reachable before saving.
+- **Telegram** — sent to a Telegram channel or group chat via a bot token and chat ID
+
+---
+
+## Alert history and acknowledging alerts
+
+Open **Mining Control → Event Log** to see a full history of all fired rules, including which miners triggered each event.
+
+- Click an event to see details: timestamp, affected miners, and the specific metric value that triggered the rule.
+- Acknowledge an event to mark it as seen and remove it from the active alert queue.
+- Use the filters to narrow by rule, severity, site, or time range.
+
+<Note>
+  Event history is retained for 90 days. For longer retention, configure a webhook action to forward events to your own logging or observability platform.
+</Note>

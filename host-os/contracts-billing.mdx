@@ -1,0 +1,254 @@
+---
+title: "Contracts and billing"
+description: "Create hosting contracts, generate invoices automatically, collect payments via ACH, card, or crypto, and manage delinquent accounts with RevenueGuard."
+---
+
+Host OS handles the full billing cycle: contract creation, automated invoice generation, multi-method payment collection, and delinquency management.
+
+## Hosting contracts
+
+Contracts define the terms under which a customer's equipment is hosted. Each contract belongs to a specific customer and specifies the billing rate, power cap, term length, and contract type.
+
+### Contract types
+
+<AccordionGroup>
+  <Accordion title="Hosted">
+    The standard arrangement: a customer ships their miners to your facility. You charge based on power consumed. Contracts start as drafts and require equipment assignment before activation.
+
+    - Billing: metered (PDU readings), hash-based, or calculated (power specs × hours)
+    - Supports auto-renew with configurable cancellation notice window
+    - Optional failover protection pricing
+  </Accordion>
+  <Accordion title="Lease">
+    You own the equipment and lease it to the customer. Equipment reverts to you when the contract expires. Lease contracts allow up to a configurable number of manual extensions.
+
+    - Billing: same options as hosted
+    - No auto-renew; supports manual extensions
+    - Equipment assigned from your inventory
+  </Accordion>
+  <Accordion title="Infinity">
+    Hash-lease arrangement: you sell access to a fixed hashrate rather than specific machines. No physical equipment assignment required.
+
+    - Requires a miner spec (model, hashrate, efficiency)
+    - Set quantity, connector fee percentage, and customer payout wallet
+    - Can be activated immediately on creation
+  </Accordion>
+  <Accordion title="O&M (Operations and Management)">
+    You operate and manage a site or facility owned or controlled by the customer. Site assignments replace equipment assignments in this contract type.
+
+    - Bill for operational services rather than power consumed
+    - Assign one or more sites to the contract
+  </Accordion>
+</AccordionGroup>
+
+### Creating a contract
+
+<Steps>
+  <Step title="Open the customer's Contracts tab">
+    Navigate to the customer detail page and click the **Contracts** tab, then click **New Contract**.
+  </Step>
+  <Step title="Select a contract type">
+    Choose from Hosted, Lease, Infinity, or O&M. The form adjusts based on your selection.
+  </Step>
+  <Step title="Set contract details">
+    Configure the following:
+
+    - **Contract term**: Month-to-month, 3 months, 6 months, 1 year, 2 years, or custom (enter days)
+    - **Start date** and **end date** (auto-calculated from term, or override manually)
+    - **Auto-renew**: Hosted contracts can auto-renew; lease and Infinity contracts do not
+  </Step>
+  <Step title="Configure billing">
+    Set the **billing method** and **rate per kWh**:
+
+    - **Metered**: kWh from PDU port readings (requires PDU integration)
+    - **Hash-based**: kWh derived from hashrate × miner efficiency
+    - **Calculated**: kWh from equipment power specs × hours online
+
+    You can also set a **billing priority** order — the system uses the first available method for each invoice period. Set an optional **power cap** (in kW) to define the customer's maximum allocation.
+  </Step>
+  <Step title="Assign equipment or sites">
+    For hosted and lease contracts, the wizard advances to a second step for equipment assignment. For O&M contracts, you assign sites. For Infinity contracts, activation is immediate after configuration.
+  </Step>
+  <Step title="Activate the contract">
+    Once equipment or sites are assigned, activate the contract from the contracts list. A permanent contract number is generated at activation.
+  </Step>
+</Steps>
+
+<Tip>
+  The rate per kWh pre-fills from your organization's default energy rate. You can override it per contract if you offer different rates to different customers.
+</Tip>
+
+### Failover protection
+
+For hosted and lease contracts, you can enable **failover protection** — a separate pricing mode that applies when the primary billing method is unavailable (for example, when PDU readings are missing).
+
+Configure the failover pricing mode:
+- **Market hashprice**: bill based on a percentage of current Bitcoin hashprice
+- **Fixed rate**: bill at a fixed $/kWh rate during failover periods
+
+---
+
+## Invoice generation
+
+Invoices are generated per customer per billing period. You can generate them automatically or manually.
+
+### Billing settings
+
+Go to **Host OS → Billing Settings → General** to configure:
+
+| Setting | Description |
+|---|---|
+| Billing day of month | Day invoices are generated (1–28). Day 1 = standard calendar months. Any other day creates rolling periods (e.g., 15th to 14th of next month). |
+| Invoice due days | Number of days after invoice date until payment is due (default: 15) |
+| Auto-generate invoices | Automatically generate invoices on the billing day |
+| Auto-send invoices | Automatically email invoices to customers after generation |
+
+### Generating invoices manually
+
+Go to **Host OS → Invoices** and click **Generate Invoices** to open the invoice preview flow, or click **Run Batch Generation** to generate for all billable customers at once.
+
+Batch generation options:
+- **Billing period**: select the month to invoice
+- **Customer**: generate for all customers or a specific one
+- **Skip customers with existing invoices**: skip accounts that already have an issued or paid invoice for the selected period
+
+<Note>
+  Customers in default or on billing hold receive **held** invoices. Held invoices are not emailed automatically and must be manually released.
+</Note>
+
+### Invoice statuses
+
+| Status | Meaning |
+|---|---|
+| Draft | Created but not yet sent to the customer |
+| Issued | Sent to the customer; awaiting payment |
+| Paid | Payment received and confirmed |
+| Overdue | Past the due date with no payment |
+| Held | Suppressed due to default or billing hold |
+| Cancelled | Voided; no payment expected |
+| Written Off | Marked as unrecoverable |
+
+You can update invoice statuses individually or in bulk using multi-select.
+
+### Invoice settings
+
+Go to **Host OS → Billing Settings → Invoice Settings** to configure:
+- Invoice logo and header
+- Whether line items are shown to customers (can also be set per customer)
+- Tax rate and tax display
+- Custom footer text
+
+---
+
+## Payment collection
+
+Customers pay invoices through the customer portal. You can also manage payment methods on their behalf.
+
+### Supported payment methods
+
+<CardGroup cols={2}>
+  <Card title="ACH bank transfer" icon="building-columns">
+    Connected via Plaid. Customers link their bank account for direct debit. Best for recurring payments on large invoices.
+  </Card>
+  <Card title="Credit or debit card" icon="credit-card">
+    Processed via Stripe. Supports major card networks. Processing fees apply.
+  </Card>
+  <Card title="Crypto — NowPayments" icon="bitcoin">
+    Customers pay in a wide range of cryptocurrencies. NowPayments converts to your settlement currency.
+  </Card>
+  <Card title="Crypto — OpenNode" icon="bolt">
+    Bitcoin Lightning and on-chain payments via OpenNode. Fast settlement with low fees.
+  </Card>
+</CardGroup>
+
+Configure which payment processors are active under **Host OS → Integrations**.
+
+### Auto-pay
+
+Customers can enable auto-pay in the customer portal. When auto-pay is active, their preferred payment method is charged automatically when an invoice is issued.
+
+### Customer credit balance
+
+Customers can hold a credit balance. Credits are applied automatically when invoices are generated. You can add or adjust credit balances from the **Financials** tab on the customer detail page.
+
+---
+
+## Sales quotes
+
+Use the **Quote Builder** to create and send quotes to prospective or existing customers before a contract is signed.
+
+Quotes are built in a five-step wizard:
+
+<Steps>
+  <Step title="Customer">
+    Select an existing hosted customer or enter details for a new prospect. Customer email is required to send the quote.
+  </Step>
+  <Step title="Line items">
+    Add equipment from your product catalog or create custom line items. For each item, set quantity, unit price, cost basis (for internal margin tracking), condition (new/used/refurbished), and hardware specs (hashrate, power, efficiency).
+  </Step>
+  <Step title="Fulfillment and terms">
+    Choose whether the customer ships their own equipment to you, or you procure hardware on their behalf. Set the contract term (month-to-month through 3 years), rate per kWh, and assign a site.
+  </Step>
+  <Step title="Fees and pricing">
+    Review the equipment subtotal and configure additional fees: admin fee, transfer fee, install fee, hosting deposit, shipping and handling, and sales tax. The buyer total updates in real time. You can reset fees to suggested values based on your org defaults and selected site.
+  </Step>
+  <Step title="Review">
+    Add the agreement text (pre-filled from your active terms template) and internal notes. Save as a draft or save and mark as sent to deliver the quote to the customer.
+  </Step>
+</Steps>
+
+---
+
+## RevenueGuard and delinquency management
+
+RevenueGuard protects your revenue from two sources: unpaid accounts and uncontracted equipment.
+
+### Managing delinquent customers
+
+When a customer stops paying:
+
+<Steps>
+  <Step title="Mark the account in default">
+    Open the customer detail page and go to the **Default Status** tab. Enable the default status and enter a reason.
+  </Step>
+  <Step title="Activate pool redirect">
+    Toggle **Pool Redirect Active**. The customer's mining equipment hashrate is redirected to your holding pool, allowing you to recover revenue while the account is delinquent.
+  </Step>
+  <Step title="Resolve the account">
+    Once the customer pays outstanding invoices, disable pool redirect and clear the default status. The customer's equipment resumes normal operation.
+  </Step>
+</Steps>
+
+<Warning>
+  Pool redirect changes take effect the next time the miner connects to the pool. There may be a brief delay depending on miner reconnect intervals.
+</Warning>
+
+### Uncontracted equipment
+
+RevenueGuard also flags equipment that is online and generating hashrate but has no active contract. The **RevenueGuard** panel in the Host OS dashboard shows a count of uncontracted units with a badge alert.
+
+Resolve uncontracted equipment by:
+- Creating a new contract and assigning the equipment
+- Assigning the equipment to an existing contract
+- Removing the equipment from service
+
+---
+
+## Product catalog
+
+Maintain a library of miner SKUs used in quotes and contract line items.
+
+Go to **Host OS → Product Catalog** to add or edit products. Each product includes:
+
+| Field | Description |
+|---|---|
+| Name | Display name of the miner model |
+| SKU | Unique identifier within your organization |
+| Price | Customer-facing price in USD |
+| Hashrate | TH/s |
+| Power | Watts |
+| Efficiency | J/TH (auto-calculated if left blank) |
+| Stock quantity | Units available |
+| Cost basis | Internal cost per unit for margin tracking (not shown to customers) |
+
+Products can be archived to hide them from new quotes while preserving historical data.

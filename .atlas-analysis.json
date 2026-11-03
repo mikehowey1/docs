@@ -1,0 +1,113 @@
+{
+  "projectType": "saas",
+  "projectName": "Dune Digital",
+  "projectDescription": "AI-powered Bitcoin mining and hosting platform with fleet management (Hash Streams), hosting customer management (Host OS), equipment marketplace, and a self-service customer portal.",
+  "theme": "almond",
+  "primaryColor": "#e55b6b",
+  "lightColor": "#6767e3",
+  "darkColor": "#0c0c0c",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "account-setup"
+            ]
+          },
+          {
+            "group": "Platform",
+            "pages": [
+              "platform/overview",
+              "platform/pricing",
+              "platform/organizations"
+            ]
+          },
+          {
+            "group": "Hash Streams",
+            "pages": [
+              "hash-streams/overview",
+              "hash-streams/site-setup",
+              "hash-streams/fleet-management",
+              "hash-streams/curtailment",
+              "hash-streams/event-rules",
+              "hash-streams/ai-streams"
+            ]
+          },
+          {
+            "group": "Host OS",
+            "pages": [
+              "host-os/overview",
+              "host-os/customer-management",
+              "host-os/contracts-billing",
+              "host-os/white-label"
+            ]
+          },
+          {
+            "group": "Marketplace",
+            "pages": [
+              "marketplace/overview",
+              "marketplace/buying",
+              "marketplace/selling",
+              "marketplace/hashguard"
+            ]
+          },
+          {
+            "group": "Customer Portal",
+            "pages": [
+              "customer-portal/overview",
+              "customer-portal/equipment-earnings",
+              "customer-portal/payments-wallet"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Operations",
+            "pages": [
+              "guides/setup-first-site",
+              "guides/onboard-customers",
+              "guides/configure-alerts",
+              "guides/manage-payments"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Hash Streams: real-time ASIC miner fleet monitoring and AI-powered optimization",
+    "AI Streams: GPU cluster monitoring and workload management",
+    "Automated curtailment based on power pricing and grid signals",
+    "PDU control and power monitoring per port",
+    "Host OS: white-label hosting customer management with contracts and automated invoicing",
+    "HashGuard: automatic TH/s credit compensation for hosting underperformance",
+    "Global equipment marketplace for buying and selling ASIC miners",
+    "Self-service customer portal with earnings, invoices, payments, and alerts",
+    "Bitcoin Allocation Contracts (BAC) for structured hashrate delivery",
+    "Multi-organization support with role-based access control",
+    "Plaid, Stripe, and crypto payment integrations for hosting customers"
+  ],
+  "publicApiSurface": [
+    "agent-ingest-v1: telemetry ingestion endpoint for site agents",
+    "agent-register: register a new site monitoring agent",
+    "agent-heartbeat: keep-alive for deployed agents",
+    "agent-get-config: retrieve agent configuration",
+    "agent-generate-token: generate secure agent authentication tokens",
+    "curtailment-signal-ingest: ingest demand response curtailment signals",
+    "check-hashguard-status: query HashGuard protection status for equipment",
+    "create-checkout: initiate a Stripe subscription checkout session",
+    "create-marketplace-payment: initiate marketplace equipment purchase payment",
+    "marketplace-checkout: complete marketplace cart checkout",
+    "customer-portal: customer self-service portal API",
+    "support-ticket-ops: create and manage support tickets",
+    "send-contact-email: contact form submission endpoint"
+  ]
+}

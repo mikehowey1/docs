@@ -1,0 +1,146 @@
+---
+title: Account setup
+description: Configure your profile, secure your account with MFA, manage your organization, and set notification and display preferences.
+---
+
+Your account settings are available at any time by clicking your avatar or name in the top navigation and selecting **Account Settings**.
+
+## Profile and login
+
+<Tabs>
+  <Tab title="Email and password">
+    Your email address is the primary identifier for your account. It is shown in the **Account Information** section of settings but cannot be changed from the UI directly — contact support if you need to update it.
+
+    **To set or change your password:**
+
+    1. Go to **Account Settings**.
+    2. Under **Linked Login Methods**, find the **Email & Password** row.
+    3. If you signed up via an invite or OAuth, this row shows a **Set Password** button. Click it, enter a new password (minimum 8 characters, mixed case, at least one number), and confirm it.
+    4. If a password is already set, the row shows a **Connected** badge. Use the **Forgot Password** link on the login screen to reset it.
+
+    <Note>
+      Adding a password to an account that was created via invite lets you sign in with email and password in addition to any other linked methods.
+    </Note>
+  </Tab>
+  <Tab title="Multi-factor authentication">
+    Dune Digital supports TOTP-based multi-factor authentication (MFA) using any authenticator app (e.g., Google Authenticator, Authy, 1Password).
+
+    **To enable MFA:**
+
+    1. Go to **Account Settings**.
+    2. Find the **Two-Factor Authentication** section.
+    3. Click **Set Up MFA** and follow the prompts: scan the QR code with your authenticator app, then enter the 6-digit code to confirm.
+
+    Once enabled, every sign-in requires your password and a one-time code from your authenticator app.
+
+    **To disable MFA:**
+
+    Return to the Two-Factor Authentication section and click **Remove MFA**. You'll need to verify a current one-time code before it's removed.
+
+    <Warning>
+      If you lose access to your authenticator app with MFA enabled, contact support to recover your account. There is no self-service recovery for lost MFA devices.
+    </Warning>
+  </Tab>
+</Tabs>
+
+---
+
+## Organization
+
+Every account belongs to at least one organization. Organizations group your sites, miners, team members, and customers together.
+
+### Viewing and editing your organization
+
+Navigate to your organization page from the dashboard sidebar. As an organization owner, you can update:
+
+- **Name** — the display name used across the platform
+- **Description** — an internal note about the organization
+- **Billing email** — where invoices and billing alerts are delivered
+
+### Team management
+
+You can invite other users to your organization and assign them roles. Invitations are sent by email. When the recipient accepts the invite, their account is linked to your organization.
+
+<Note>
+  Team management and multi-member organizations require the **Business** plan or the **Teams** add-on.
+</Note>
+
+Available roles:
+- **Owner** — full access including billing and organization settings
+- **Admin** — full operational access, cannot manage billing or delete the organization
+- **Member** — access to fleet, hosting, and marketplace features based on what the owner enables
+
+To remove a member, go to your organization's **Members** tab and revoke their access. They immediately lose access to all organization resources.
+
+---
+
+## Notification preferences
+
+Control which events trigger email notifications under **Account Settings > Notification Preferences**.
+
+| Notification | Default | What it covers |
+|---|---|---|
+| Email notifications | On | Master switch for all email alerts |
+| Miner offline alerts | On | Notified when a miner loses connectivity |
+| Cooling alerts | On | Notified when temperature thresholds are exceeded |
+| Power alerts | On | Notified when power draw deviates from expected |
+| Billing alerts | On | Notified on upcoming charges or payment issues |
+| Invoice notifications | On | Notified when a new invoice is generated |
+
+Toggle each switch to match your preferences. Changes save immediately.
+
+---
+
+## Display preferences
+
+### Language
+
+Dune Digital supports multiple languages. Select your preferred language under **Account Settings > Language**. The interface updates immediately and the preference is saved to your account so it follows you across devices.
+
+### Timezone
+
+All timestamps in the platform — telemetry data, event logs, invoice dates — are displayed in your selected timezone. Set it under **Account Settings > Timezone**. The default is UTC.
+
+### Units
+
+Choose the units used across dashboards and reports under **Account Settings > Unit Preferences**:
+
+| Preference | Options |
+|---|---|
+| Power | Watts (W), Kilowatts (kW), Megawatts (MW) |
+| Temperature | Celsius (°C), Fahrenheit (°F) |
+| Hashrate | Terahash (TH/s), Petahash (PH/s), Exahash (EH/s), Zetahash (ZH/s) |
+
+### Theme
+
+Switch between **Light**, **Dark**, and **System** (follows your OS setting) under **Account Settings > Theme Preference**.
+
+---
+
+## Subscription and billing
+
+Your subscription tier and usage are managed at the organization level. To view or change your plan:
+
+1. Go to your organization page from the dashboard.
+2. Select the **Billing** or **Subscription** tab.
+
+From there you can:
+- See your current plan (Pay As You Go or Business)
+- View data usage and remaining credits
+- Upgrade to Business or add optional add-ons
+- Switch between monthly and annual billing
+
+<Tip>
+  Annual billing is available on the Business plan at approximately 17% off — equivalent to paying for 10 months and getting 12.
+</Tip>
+
+Available Business add-ons include hosting management (Host OS), advanced protocols, PDU control, AI curtailment, team management, custom integrations, white-label branding, and API access. Contact sales for custom pricing on large deployments.
+
+<CardGroup cols={2}>
+  <Card title="Pricing" icon="tag" href="/platform/pricing">
+    Compare plans and add-on costs in detail.
+  </Card>
+  <Card title="Organizations" icon="building" href="/platform/organizations">
+    Learn how organizations work and how to manage members and permissions.
+  </Card>
+</CardGroup>

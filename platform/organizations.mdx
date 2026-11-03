@@ -1,0 +1,114 @@
+---
+title: Organizations
+description: Organizations group your users, sites, and billing under one entity. Learn how to create an organization, invite team members, manage roles, and switch between multiple organizations.
+---
+
+An **organization** is the top-level container for everything in your Dune Digital account: sites, agents, team members, subscription, and billing. When you take an action in the platform — adding a site, inviting a user, or viewing a dashboard — you do it within the context of a specific organization.
+
+If you operate multiple distinct businesses (for example, a self-mining operation and a separate hosting company), you can create a separate organization for each. Each organization has its own plan, billing, and team.
+
+## Creating an organization
+
+When you sign up for Dune Digital and complete onboarding, an organization is created for you automatically. You can also create additional organizations from the organization switcher in the sidebar.
+
+Each organization has:
+
+- A **name** — displayed throughout the platform and in any customer-facing portals you create
+- A **slug** — a URL-friendly identifier used in organization-specific URLs (e.g., `/organization/my-company`)
+- An optional **description** and **billing email**
+- **Branding settings** — logo, primary color, accent color, and slogan used in white-label portals
+
+<Note>
+  Only the organization owner can edit the organization's name, slug, and core settings. Administrators can manage members and teams but cannot change core organization details.
+</Note>
+
+## Inviting team members
+
+<Steps>
+  <Step title="Open your organization settings">
+    Navigate to **Organization** in the sidebar, then select the **Members** tab.
+  </Step>
+  <Step title="Click Invite member">
+    Click the **Invite member** button to open the invitation dialog.
+  </Step>
+  <Step title="Enter the email address and role">
+    Type the invitee's email address and select a role from the dropdown. The invitation is tied to that specific email address.
+  </Step>
+  <Step title="Send the invitation">
+    Click **Send invite**. Dune Digital sends an email with a unique invitation link. The link is valid for a limited time. If the email cannot be delivered, you can copy the invite link and share it manually.
+  </Step>
+  <Step title="Invitee accepts">
+    The invitee clicks the link in the email, signs in (or creates an account), and accepts the invitation. They are immediately added to the organization with the assigned role.
+  </Step>
+</Steps>
+
+<Warning>
+  Invitation links are single-use and tied to the invited email address. If someone opens the link while signed into a different Dune Digital account, they will be prompted to switch to the invited email before accepting.
+</Warning>
+
+You can view and cancel pending invitations from the **Members** tab at any time.
+
+## Roles
+
+Every organization member has a role that determines what they can see and do. Roles are assigned when you invite a member and can be changed afterward by an owner or administrator.
+
+<AccordionGroup>
+  <Accordion title="Owner">
+    Full control over the organization. Owners can edit all organization settings, manage members (including promoting to owner), manage billing, and delete the organization. There is one owner per organization. Ownership can be transferred to another member.
+  </Accordion>
+  <Accordion title="Administrator">
+    Administrators can manage members, teams, and site access. They can invite and remove members, assign roles up to Administrator, and configure team permissions. They cannot change core organization settings (name, slug, domains) or billing without owner approval.
+  </Accordion>
+  <Accordion title="Systems">
+    Systems users have full Hash Streams access and technician-level access to sites. They can issue hardware commands (reboot, tune, pool switch), configure agents, and access curtailment controls. They do not have access to billing or organization settings.
+  </Accordion>
+  <Accordion title="Sales">
+    Sales users can access customer-facing tools and the customer management area of Host OS. Intended for staff who manage customer relationships without needing hardware or billing access.
+  </Accordion>
+  <Accordion title="Finance">
+    Finance users can access billing, invoices, payouts, and customer financials. They cannot manage hardware, members, or organization settings.
+  </Accordion>
+  <Accordion title="Member">
+    The base role. Members can view organization resources according to their team-level site access. They cannot issue commands, change settings, or access billing.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Use teams (available on Business plan with the Teams add-on) to control site-level access for members with the Systems or Member role. A technician assigned to a team only sees the sites that team is authorized to access.
+</Tip>
+
+## Switching organizations
+
+If you belong to more than one organization, the **organization switcher** appears in the sidebar. Click it to see all organizations you have access to, then select the one you want to work in.
+
+Switching organizations reloads the platform context — dashboards, sites, agents, and team data all update to reflect the selected organization. Your personal account settings (profile, email, password) are shared across all organizations.
+
+## Organization management tabs
+
+From **Organization** in the sidebar, you can manage all aspects of your organization. Tabs available depend on your role and subscription:
+
+| Tab | Access | Description |
+|---|---|---|
+| **General** | All members | Organization name, slug, description, and contact info |
+| **Branding** | Owner | Logo, colors, slogan for white-label portals |
+| **Members** | Owner, Admin | Invite, remove, and change roles for team members |
+| **Teams** | Owner, Admin | Create teams and assign members and site access |
+| **Permissions** | Owner, Admin | Fine-grained permission overrides |
+| **Site Access** | Owner, Admin | Matrix view of which teams can access which sites |
+| **Emails** | Owner | Customize transactional email templates sent to customers |
+| **Domains** | Owner | Configure custom domains for white-label portals |
+| **Agents** | Owner, Admin | View and manage registered site agents |
+| **Plan** | Owner, Admin, Finance | Current subscription and upgrade options |
+| **Usage** | Owner, Admin, Finance | Data consumption and usage alerts |
+| **Payment** | Owner, Admin, Finance | Payment methods |
+| **Invoices** | Owner, Admin, Finance | Billing history and invoice downloads |
+
+<Note>
+  Operations tabs (Members, Teams, Agents, etc.) and billing tabs are only visible to accounts with an active paid subscription. On the free tier (Pay As You Go with no active usage), only **General** and **Branding** are shown.
+</Note>
+
+## Leaving an organization
+
+To leave an organization, go to **Organization → General** and use the leave option at the bottom of the page. You cannot leave an organization if you are the sole owner — transfer ownership to another member first, then leave.
+
+If you are the owner and want to close the organization entirely, cancel your subscription first, then delete the organization from the General tab. Deletion is permanent and cannot be undone.

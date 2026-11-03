@@ -1,0 +1,155 @@
+---
+title: "Payments & Wallet"
+description: "View and pay hosting invoices, choose your preferred payment method, and configure the wallet address for your Bitcoin mining payouts."
+---
+
+## Invoices
+
+Navigate to **Invoices** to see every invoice your hosting provider has issued to you. Three summary cards at the top show your total billed amount, total paid, and total pending across all invoices.
+
+### Invoice statuses
+
+| Status | Meaning |
+|--------|---------|
+| **Issued** | Invoice has been created and sent to you |
+| **Pending** | Payment has not yet been received |
+| **Overdue** | Past the due date without payment |
+| **Paid** | Payment confirmed |
+| **Held** | Your host has placed the invoice on hold |
+| **Cancelled** | Invoice was voided |
+| **Draft** | Invoice is being prepared and not yet finalized |
+
+### What an invoice covers
+
+Each invoice covers one billing period (typically a calendar month). Depending on your contract type, an invoice may include:
+
+- **Power costs** — kWh consumed multiplied by your contracted rate per kWh
+- **Hosting fee** — a flat fee or percentage for the hosting service itself
+- **HashGuard credits** — any compensation credits accrued during the billing period are deducted from the invoice total automatically
+
+If your host has enabled line-item invoices for your account, you can download a PDF with a per-unit breakdown showing each miner's kWh consumption, rate, and subtotal.
+
+### Downloading a PDF
+
+Click the **PDF** button on any invoice row to download a formatted invoice. The PDF includes your contact information, the host's branding and address, the billing period, all line items (if enabled), and the total amount due.
+
+### Paying an invoice
+
+Click **Pay** next to any invoice with a status of Issued, Pending, or Overdue to open the payment dialog and choose your payment method.
+
+<Note>
+  The **Pay** button only appears for invoices that can be paid. Already-paid, draft, held, and cancelled invoices do not show this button.
+</Note>
+
+---
+
+## Payment methods
+
+Navigate to **Payments** to see all available payment methods. Your host may enable a subset of these options depending on their platform configuration.
+
+<Tabs>
+  <Tab title="ACH bank transfer">
+    ACH is the recommended payment method for US customers. It is fee-free for standard processing.
+
+    **Linking your bank account:**
+
+    <Steps>
+      <Step title="Open Payments">
+        Go to **Payments** in the sidebar.
+      </Step>
+      <Step title="Connect a bank account">
+        In the **Bank Accounts** section, click **Connect bank account**. This opens Plaid, a secure bank connection service. Plaid is used by thousands of financial institutions and does not store your banking credentials.
+      </Step>
+      <Step title="Search for your bank">
+        Type the name of your bank and select it. Follow the prompts to log in with your online banking credentials through Plaid's secure interface.
+      </Step>
+      <Step title="Select account">
+        Choose the checking or savings account you want to link for ACH payments.
+      </Step>
+      <Step title="Confirm">
+        After Plaid verifies the account, it appears in your bank account list. You can now select it when paying invoices.
+      </Step>
+    </Steps>
+
+    <Note>
+      Same-day ACH processing may incur an additional fee depending on your host's configuration. Standard ACH typically settles in 1–3 business days.
+    </Note>
+  </Tab>
+  <Tab title="Credit or debit card">
+    Pay by Visa, Mastercard, American Express, or Discover through Stripe. Card payments process immediately.
+
+    Card payments have a processing fee applied at checkout. There is also a maximum payment amount per transaction — if your invoice exceeds this limit, contact your host about alternative payment arrangements.
+
+    Your card details are handled entirely by Stripe and are never stored on Dune Digital servers.
+  </Tab>
+  <Tab title="Bitcoin">
+    Pay invoices directly in Bitcoin via the OpenNode payment gateway. When you select Bitcoin at checkout:
+
+    1. A Lightning or on-chain payment address is generated for the exact invoice amount converted at the current exchange rate.
+    2. Send the exact amount shown to the displayed address or scan the QR code.
+    3. Payment is confirmed on-chain after the required number of confirmations. Lightning payments confirm in seconds.
+
+    Bitcoin payments carry a small network fee — standard Bitcoin transaction fees apply.
+  </Tab>
+  <Tab title="Stablecoin / other crypto">
+    Pay with USDT, USDC, or other supported cryptocurrencies via NowPayments. When you select this option at checkout, choose your preferred currency and network. A payment address and QR code are generated for the exact amount.
+
+    Supported currencies include USDT (TRC20, ERC20), USDC (Solana, ERC20, TRC20), and others depending on your host's NowPayments configuration.
+  </Tab>
+</Tabs>
+
+### Security
+
+All payment processing is handled by third-party PCI-compliant providers (Plaid, Stripe, OpenNode, NowPayments). Dune Digital does not store card numbers or bank account credentials.
+
+---
+
+## Wallet
+
+Navigate to **Wallet** to configure where your mining earnings are sent when your host processes a payout settlement.
+
+### Setting your payout address
+
+<Steps>
+  <Step title="Open Wallet">
+    Go to **Wallet** in the sidebar.
+  </Step>
+  <Step title="Enter your wallet address">
+    Paste your Bitcoin or stablecoin wallet address in the **Wallet address** field. Double-check the address — payouts sent to an incorrect address cannot be recovered.
+  </Step>
+  <Step title="Select currency">
+    Choose your preferred payout currency: BTC, USDT (TRC20), USDT (ERC20), USDC (Solana), USDC (ERC20), or USDC (TRC20).
+  </Step>
+  <Step title="Select network">
+    If the currency runs on multiple networks, confirm the correct network matches the address you entered.
+  </Step>
+  <Step title="Save">
+    Click **Save** to update your payout settings. The new address takes effect for the next settlement processed by your host.
+  </Step>
+</Steps>
+
+<Warning>
+  Always verify your wallet address before saving. Payouts are irreversible once sent to the address on file. If you are changing your address, update it before your host's next settlement run.
+</Warning>
+
+### Payout schedule and minimums
+
+Your host controls when earnings settlements are processed. Typical cadences are weekly or monthly, but this depends on your contract.
+
+| Item | Detail |
+|------|--------|
+| **Minimum payout (BTC)** | `0.001 BTC` — smaller balances accumulate until the threshold is met |
+| **BTC payout fee** | No platform fee — only standard Bitcoin network transaction fees |
+| **Stablecoin payout fee** | 1% conversion fee to cover the BTC-to-stablecoin exchange at market rate |
+
+Earnings are settled periodically by your host after an internal verification step. If you believe a settlement is overdue, open a support ticket from the **Support** section.
+
+---
+
+## Billing questions and support
+
+If you have a question about an invoice amount, a payment that has not been reflected, or any other billing issue, navigate to **Support** and open a ticket. Your host's team receives it directly.
+
+<Tip>
+  Include the invoice number (visible in the Invoices list) in your support ticket to help your host locate the record quickly.
+</Tip>

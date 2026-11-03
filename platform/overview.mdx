@@ -1,0 +1,69 @@
+---
+title: Overview
+description: How the Dune Digital platform is structured and how its products connect to give you end-to-end visibility and control over your Bitcoin mining and hosting operation.
+---
+
+Dune Digital is an AI-powered Bitcoin mining and hosting SaaS platform. It connects field hardware — ASIC miners, PDUs, and power systems — to a cloud platform that processes telemetry, runs automation, and surfaces everything you need to operate at scale.
+
+The platform is built around a central **Dune AI** hub that unifies six products. Each product handles a distinct part of your operation, and all of them share the same data layer so information flows without manual work.
+
+## Products
+
+<CardGroup cols={2}>
+  <Card title="Hash Streams" icon="cpu">
+    Real-time ASIC fleet management. A lightweight site agent runs on your local network, discovers miners automatically, and streams telemetry — hashrate, power draw, temperatures, error states — to the platform. You can issue commands (reboot, tune, pool switch), configure curtailment rules, and control PDUs directly from the Hash Streams dashboard.
+  </Card>
+  <Card title="Host OS" icon="server">
+    White-label hosting management. Host OS gives you the tools to run a hosting business: customer contracts, automated invoicing, branded customer-facing portals, and hosting site financials. It connects your physical sites in Hash Streams to the billing and customer layer above them.
+  </Card>
+  <Card title="Marketplace" icon="store">
+    Buy and sell verified mining equipment. Listings are backed by HashGuard — a performance verification layer that validates hashrate and uptime before funds move. The Marketplace connects buyers and sellers globally without requiring trust between parties.
+  </Card>
+  <Card title="Customer Portal" icon="user">
+    Self-service portal for your hosting customers. Customers log in to see their equipment's live status, earnings history, power consumption, and payment records — without contacting you. Host OS provisions portals automatically when you onboard a customer.
+  </Card>
+  <Card title="AI Streams" icon="sparkles">
+    GPU compute management. AI Streams extends the platform's telemetry and automation capabilities to GPU-based infrastructure, covering the same monitoring and control surface as Hash Streams but for AI compute workloads.
+  </Card>
+  <Card title="Land & Power" icon="map-pin">
+    Site procurement. Find and evaluate hosting sites, land, and power capacity across the platform's network of available locations.
+  </Card>
+</CardGroup>
+
+## How data flows
+
+Telemetry originates at the hardware level and flows up through the platform in a consistent pattern:
+
+<Steps>
+  <Step title="Agent discovery">
+    The Hash Streams agent runs on a machine inside your local network (a NUC, Raspberry Pi, or any always-on computer). It scans for miners on the subnet and opens persistent connections using each miner's native protocol.
+  </Step>
+  <Step title="Telemetry streaming">
+    The agent streams compressed telemetry from every connected miner to the Dune platform over a secure outbound connection. You control how frequently data is sent — higher frequency means more resolution but more data usage.
+  </Step>
+  <Step title="Platform processing">
+    The Dune AI platform ingests the stream, stores it according to your plan's retention window, and runs automation rules — curtailment triggers, alert conditions, and scheduled operations — against the live data.
+  </Step>
+  <Step title="Customer visibility">
+    Data surfaces in the Hash Streams dashboard for your operations team, and (if you use Host OS) in the Customer Portal for your hosted clients.
+  </Step>
+</Steps>
+
+## Multi-site and multi-organization support
+
+A single account can operate multiple sites. Each site has its own agent, and all sites appear in a unified dashboard view. You can segment access by site so that technicians only see the hardware they manage.
+
+If you operate multiple distinct businesses — for example, a mining operation and a separate hosting company — you can create multiple **organizations**. Each organization has its own subscription, billing, team members, and data. Switch between organizations using the organization switcher in the sidebar.
+
+<Note>
+  The agent never requires inbound ports to be opened on your network. All connections are outbound from the agent to the platform, which means your miners stay behind your existing firewall.
+</Note>
+
+## Key capabilities
+
+| Capability | Description |
+|---|---|
+| **HashGuard** | Performance protection for Marketplace transactions — validates hashrate and uptime before settlement |
+| **Bitcoin Allocation Contracts** | Structured contracts between hosts and miners that define hosting terms, revenue splits, and SLA conditions |
+| **AI Curtailment** | Automated demand-response that shuts down or throttles miners based on power price signals, schedules, or external triggers |
+| **White-label portals** | Branded mobile-accessible portals (PWA) your customers see as your own product, not Dune Digital |

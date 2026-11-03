@@ -1,0 +1,111 @@
+---
+title: "Overview"
+description: "Hash Streams is Dune Digital's AI-powered ASIC miner fleet monitoring and management platform. Deploy a lightweight agent on your local network and get real-time dashboards, automated curtailment, PDU control, and event-driven automation."
+---
+
+## What is Hash Streams?
+
+Hash Streams connects your mining facility to the Dune Digital platform via a small agent binary that runs on any machine inside your local network. The agent discovers miners automatically, collects telemetry every five minutes by default, and streams compressed data to the platform where it is stored, enriched, and made available through your dashboard.
+
+The platform handles three things for you:
+
+- **Collect** — The agent scans your network segments, polls every discovered ASIC miner for live telemetry (hashrate, temperature, power, fan RPM, uptime, pool status, and more), and uploads it using a compressed binary protocol.
+- **Enrich** — Telemetry is normalized, matched to your equipment registry, and combined with grid price signals, weather data, and demand response events.
+- **Route** — Enriched data powers your live dashboard, triggers event rules, and drives automated curtailment commands that are queued back to the agent for execution.
+
+## How it works
+
+```
+Your Facility                      Dune Digital Platform
+─────────────────────             ─────────────────────────────────
+ ASICs on LAN                       Telemetry ingest
+     │                                  │
+ Site agent (binary)  ──HTTPS──►    Normalization + enrichment
+     │                                  │
+ PDUs on LAN                        Live status (50-second refresh)
+                                         │
+                                     Dashboard + Event rules + Curtailment
+```
+
+The agent authenticates with a registration token that binds it to your organization and site. All traffic is outbound HTTPS (TCP 443) — no inbound firewall rules are needed.
+
+## Key capabilities
+
+<CardGroup cols={2}>
+  <Card title="Real-time monitoring" icon="activity" href="/hash-streams/fleet-management">
+    Live hashrate, chip temperature, power draw, efficiency (J/TH), fan RPM, uptime, and pool status for every miner in your fleet. Dashboard refreshes every 50 seconds.
+  </Card>
+  <Card title="Curtailment automation" icon="zap" href="/hash-streams/curtailment">
+    Automatically reduce load based on electricity price (LMP), grid demand response signals, or a custom schedule. Supports Voltus, CPower, and a generic webhook integration.
+  </Card>
+  <Card title="PDU control" icon="power" href="/hash-streams/fleet-management#pdu-control">
+    View per-port power readings, toggle outlets, and track port history for every PDU registered to a site.
+  </Card>
+  <Card title="Event rules" icon="bell" href="/hash-streams/event-rules">
+    Define trigger conditions — offline status, high chip temperature, low hashrate, fan failure — and attach actions such as email notification, automated reboot, or a webhook call.
+  </Card>
+  <Card title="Site setup" icon="settings" href="/hash-streams/site-setup">
+    Add a site, download the agent for Windows, Linux, or Docker, and let the agent discover your miners automatically via network scan.
+  </Card>
+  <Card title="AI Streams" icon="server" href="/hash-streams/ai-streams">
+    Companion product for GPU cluster operations — same platform, different compute type.
+  </Card>
+</CardGroup>
+
+## Data costs
+
+Hash Streams charges for the compressed telemetry data your agents upload. You control your costs by setting the scan interval per network segment.
+
+| Plan | Rate | Estimated cost per miner/mo |
+|---|---|---|
+| Pay As You Go | $0.018 / MB | ~$0.53 |
+| Business | $0.015 / MB | ~$0.42 |
+
+Estimates assume the default 5-minute scan interval (~35 MB/miner/month from production telemetry). Adjusting the scan interval directly scales your data volume and cost.
+
+Both plans include **200 MB** of welcome credits — enough to get a small fleet running at no cost.
+
+<Note>
+  The Business plan ($149/month base) also unlocks automated curtailment, unlimited agents, advanced analytics, and priority support. The Pay As You Go plan is free to start with up to 2 agents.
+</Note>
+
+## Pricing plans
+
+<CardGroup cols={2}>
+  <Card title="Pay As You Go" icon="circle">
+    **$0/month base** + $0.018/MB
+
+    - Up to 3 site agents
+    - Up to 3 network segments
+    - Up to 1,550 miners
+    - Basic alerting and email support
+    - 7-day data retention
+  </Card>
+  <Card title="Business" icon="star">
+    **$149/month base** + $0.015/MB
+
+    - Unlimited agents
+    - Unlimited network segments and miners
+    - Advanced curtailment automation
+    - 90-day data retention
+    - Priority support and dedicated onboarding
+    - API access and custom integrations
+  </Card>
+</CardGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Set up your first site" icon="map-pin" href="/hash-streams/site-setup">
+    Add a site, install the agent, and start receiving miner telemetry.
+  </Card>
+  <Card title="Explore fleet management" icon="cpu" href="/hash-streams/fleet-management">
+    Learn what you can see and control on the mining dashboard.
+  </Card>
+  <Card title="Configure curtailment" icon="trending-down" href="/hash-streams/curtailment">
+    Set up automated load reduction based on power prices or DR signals.
+  </Card>
+  <Card title="Create event rules" icon="bell" href="/hash-streams/event-rules">
+    Build automated triggers for equipment alerts and remediation.
+  </Card>
+</CardGroup>

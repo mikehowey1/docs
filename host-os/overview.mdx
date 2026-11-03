@@ -1,0 +1,112 @@
+---
+title: "Overview"
+description: "Host OS is a complete hosting operations platform built for Bitcoin mining service providers. Manage customers, contracts, invoicing, equipment, and payments from one place."
+---
+
+Host OS gives mining hosting companies the infrastructure to run a professional operation at scale — from onboarding the first customer to recovering overdue payments across hundreds of accounts.
+
+<Note>
+  Host OS is available on the **Business plan** only. Upgrade from your organization settings to unlock access.
+</Note>
+
+## What Host OS includes
+
+Host OS covers every stage of the customer lifecycle: acquisition, onboarding, equipment tracking, automated billing, and delinquency management.
+
+<CardGroup cols={3}>
+  <Card title="Customer management" icon="users" href="/host-os/customer-management">
+    Add customers, track their equipment, manage team access, and monitor account status across all hosted clients.
+  </Card>
+  <Card title="Contracts and billing" icon="file-text" href="/host-os/contracts-billing">
+    Create hosting contracts, generate monthly invoices automatically, and collect payments via ACH, card, or crypto.
+  </Card>
+  <Card title="White-label portal" icon="palette" href="/host-os/white-label">
+    Give customers a branded sign-in experience at your own URL. Customize colors, logo, and slogan.
+  </Card>
+</CardGroup>
+
+## Core capabilities
+
+<AccordionGroup>
+  <Accordion title="Customer management and onboarding">
+    Create customer accounts manually or invite customers by email. Each customer gets a dedicated portal where they can view their equipment, earnings, invoices, and make payments. You control portal access and can disable it at any time.
+  </Accordion>
+
+  <Accordion title="Contract creation and management">
+    Create hosting contracts with configurable terms, billing rates, power caps, and start/end dates. Supported contract types include standard hosted, lease, Infinity (hash-based), and O&M (operations and maintenance). Contracts start as drafts and are activated once equipment or sites are assigned.
+  </Accordion>
+
+  <Accordion title="Automated invoicing">
+    Set a billing day of month and Host OS generates invoices automatically for all active contracts. Invoices include kWh consumption, billing period, and line items. You can configure whether invoices are emailed to customers automatically on generation.
+  </Accordion>
+
+  <Accordion title="Equipment assignment and tracking">
+    Assign miners and other equipment to specific customers and contracts. Track which units are assigned, staged, or uncontracted. The RevenueGuard panel flags equipment that is online but generating revenue without a contract.
+  </Accordion>
+
+  <Accordion title="Payment collection">
+    Customers can pay invoices via ACH bank transfer (Plaid), credit or debit card (Stripe), or cryptocurrency (NowPayments, OpenNode). Enable auto-pay so customers are charged automatically when invoices are issued.
+  </Accordion>
+
+  <Accordion title="RevenueGuard — delinquency protection">
+    When a customer falls behind on payments, you can mark them as in default and activate pool redirect. Their miner hashrate is redirected to a holding pool you control, recovering revenue while the account is delinquent.
+  </Accordion>
+
+  <Accordion title="HashGuard integration">
+    HashGuard provides insurance-grade protection against hashrate loss. Host OS integrates with HashGuard so you can offer customers coverage against downtime and equipment failure directly from the platform.
+  </Accordion>
+
+  <Accordion title="White-label customer portal">
+    Set a custom host slug and your customers sign in at `/host/your-slug/auth` with your logo and brand colors. The portal shows equipment status, earnings, invoices, and payment options — all under your brand.
+  </Accordion>
+
+  <Accordion title="Repair work orders">
+    Track miner repairs with work orders linked to specific customers. Add line items for labor, parts, and fees. Work orders move through draft → in progress → completed → billed stages and can be converted to customer invoices.
+  </Accordion>
+
+  <Accordion title="Announcements and email notifications">
+    Send broadcast messages to all customers or specific segments. Use templates for recurring communications like maintenance windows or rate changes. Track delivery statistics for sent announcements.
+  </Accordion>
+
+  <Accordion title="Product catalog and quote builder">
+    Maintain a catalog of miner SKUs with pricing, hashrate, power draw, and stock quantities. Build multi-step sales quotes for prospective customers covering equipment, fulfillment, hosting terms, fees, and taxes. Send quotes directly from the platform.
+  </Accordion>
+
+  <Accordion title="Integrations">
+    Connect payment processors (Stripe, Plaid, NowPayments, OpenNode), accounting tools, and other services. Manage all integration credentials from a single settings page.
+  </Accordion>
+</AccordionGroup>
+
+## How the workflow runs
+
+<Steps>
+  <Step title="Add customers">
+    Create customer accounts and invite them to the portal via email. Customers sign in through your white-label auth page.
+  </Step>
+  <Step title="Create contracts">
+    Configure a hosting contract for each customer: set the billing rate, power cap, term, and contract type. Assign equipment to the contract to activate it.
+  </Step>
+  <Step title="Invoices generate automatically">
+    On your configured billing day, Host OS generates invoices for all active contracts. Invoices are emailed to customers if auto-send is enabled.
+  </Step>
+  <Step title="Customers pay through the portal">
+    Customers log in to view invoices and pay via their preferred method. You can also collect payments on their behalf or set up auto-pay.
+  </Step>
+</Steps>
+
+## Dashboard sections
+
+Your Host OS dashboard links to every operational area:
+
+| Section | What it does |
+|---|---|
+| Customers | View and manage all hosted accounts |
+| Staging | Track equipment not yet assigned to a customer |
+| Invoices | Generate, view, and manage all customer invoices |
+| Billing Settings | Configure billing day, automation, and payment processors |
+| RevenueGuard | Manage delinquent accounts and uncontracted equipment |
+| HashGuard | Manage HashGuard coverage for your customers |
+| Support Tickets | View and respond to customer support requests |
+| Notify | Send announcements and email campaigns |
+| Integrations | Connect payment and accounting services |
+| Settings | Update host branding, pool defaults, and privacy settings |

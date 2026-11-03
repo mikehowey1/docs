@@ -1,0 +1,148 @@
+---
+title: "Event rules"
+description: "Create automated triggers that fire when your equipment or site crosses a threshold — and attach notification or remediation actions that execute without manual intervention."
+---
+
+## What are event rules?
+
+Event rules are server-side automation rules that the platform evaluates periodically against your live fleet telemetry. When a rule's conditions are met for the configured sustained duration, the rule fires its actions — which can include sending an alert, rebooting miners, or calling a webhook.
+
+Rules are scoped to an organization, site, customer, contract, network segment, agent, PDU, or physical location. The system evaluates each rule against all miners in scope and tracks per-rule trigger counts, last trigger time, and consecutive failures.
+
+## Event rules page
+
+Navigate to **Operations → Event Rules** to see all rules defined for your organization. Each row shows:
+
+- Rule name and description
+- Scope (what equipment the rule watches)
+- Severity (critical, warning, info)
+- Enabled / disabled status
+- Miners in scope count
+- Total trigger count and last triggered timestamp
+- Consecutive failure count vs. maximum
+
+## Creating an event rule
+
+Click **Create rule** from the Event Rules page.
+
+<Steps>
+  <Step title="Name and scope your rule">
+    Give the rule a descriptive name and optional description. Then select the scope type and scope targets:
+
+    | Scope type | Targets |
+    |---|---|
+    | Organization | All miners across all sites |
+    | Site | All miners at a specific site |
+    | Network segment | All miners in a specific subnet |
+    | Agent | All miners managed by a specific agent |
+    | PDU | All miners connected to a specific PDU |
+    | Location | All miners in a rack, row, or shelf |
+    | Customer | All miners belonging to a customer |
+    | Contract | All miners under a billing contract |
+  </Step>
+
+  <Step title="Set severity">
+    Choose critical, warning, or info. Severity is used for display and filtering in the event dashboard — it does not change how actions are executed.
+  </Step>
+
+  <Step title="Define conditions">
+    Conditions specify what telemetry values must be true for the rule to fire. You can combine multiple conditions with **All** (AND) or **Any** (OR) logic.
+
+    Available condition metrics include:
+
+    | Metric | Description |
+    |---|---|
+    | `status` | Operational status string (e.g., `offline`, `degraded`) |
+    | `hashrate_th` | Current hashrate in TH/s |
+    | `temperature_chip_c` | Chip temperature in °C |
+    | `power_watts` | Power draw in watts |
+    | `uptime_hours` | Hours since last restart |
+    | `efficiency_j_th` | Efficiency in J/TH |
+    | `health_fans_status` | Fan health indicator (`ok`, `w` = warning, `e` = error) |
+    | `health_temp_status` | Temperature health indicator |
+    | `health_rate_status` | Hashrate health indicator |
+    | `health_network_status` | Network health indicator |
+
+    Combine multiple conditions with **All** (AND) or **Any** (OR) matching logic.
+
+    **Example — high temperature:** Select `temperature_chip_c`, operator `greater than`, value `85`.
+
+    **Example — miner offline or low hashrate:** Select `status`, operator `equals`, value `offline` — then add a second condition: `hashrate_th` less than `10`, with **Any** matching.
+  </Step>
+
+  <Step title="Configure sustained duration and cooldown">
+    - **Sustained minutes** — How many consecutive minutes the condition must be true before the rule fires (default: 5). This prevents transient spikes from triggering noisy alerts.
+    - **Cooldown minutes** — Minimum time between successive firings of the same rule (default: 15). Use this to limit notification volume for persistent issues.
+  </Step>
+
+  <Step title="Define actions">
+    Each rule can have one or more actions:
+
+    **Notification channels:**
+    - **Email** — Send to host-only, org admins, or a custom recipient list
+    - **Webhook** — POST a JSON payload to a URL you specify
+
+    **Remediation actions:**
+    - **Reboot** — Reboot affected miners automatically. Configure delay between commands (ms) and max miners per batch to avoid overloading the network.
+
+    You can also configure:
+    - **Recovery notification** — Send an alert when the condition clears
+    - **Correlate alerts** — Group alerts from the same rule into a single notification thread
+  </Step>
+
+  <Step title="Advanced options">
+    - **Approval required** — Require manual approval before remediation actions execute
+    - **Respect curtailment** — Skip remediation for miners that are currently curtailed
+    - **Max consecutive failures** — Stop firing the rule after N consecutive evaluation failures (e.g., if miners are unreachable)
+    - **Exclude equipment** — Exclude specific miners from the rule's scope
+    - **Time window** — Restrict when the rule evaluates (e.g., only during business hours)
+    - **Escalation** — Define secondary notification targets if the issue is not resolved within an escalation delay
+  </Step>
+</Steps>
+
+## Rule templates
+
+The editor provides ready-made templates to get started quickly:
+
+| Template | Conditions | Severity |
+|---|---|---|
+| Fan failure | `health_fans_status = e` | Critical |
+| High temperature (>85°C) | `temperature_chip_c > 85` | Critical |
+| Low hashrate | `hashrate_th > 0 AND hashrate_th < 10` | Warning |
+| Miner offline | `status = offline` | Warning |
+| Network health degraded | `health_network_status = w OR e` | Warning |
+
+Select a template and it pre-fills conditions and default actions. You can customize any field before saving.
+
+## Testing a rule
+
+Before enabling a rule, click the **Test** (flask) icon in the rules table. The platform runs a dry-run evaluation against your current fleet:
+
+- **Would trigger** — The rule's conditions are currently met by at least one miner in scope
+- **Would not trigger** — No miner currently meets the conditions
+- **Miners in scope** — Total count of miners the rule watches
+- **Affected count** — How many miners would be targeted if the rule fired now
+
+Testing never executes actions — it only reports what would happen.
+
+## Managing rules
+
+From the event rules table you can:
+
+- **Enable / disable** — Toggle a rule on or off without deleting it
+- **Snooze** — Temporarily pause a rule for 1, 4, 8, or 24 hours (useful during planned maintenance)
+- **Duplicate** — Clone a rule as a starting point for a new variation
+- **Edit** — Open the rule editor to modify any setting
+- **Delete** — Permanently remove the rule (requires confirmation)
+
+<Warning>
+  Deleting a rule also removes its trigger history. If you want to disable a rule without losing history, use the enable/disable toggle instead.
+</Warning>
+
+## Event dashboard
+
+The **Site Ops State Banner** at the top of the Operations pages shows whether any event rules are currently active or have recently triggered for the selected site. Click the banner to navigate to the event rules list filtered to triggered rules.
+
+<Tip>
+  Start with a generous sustained duration (10–15 minutes) and cooldown (30–60 minutes) when you first create rules. You can tighten these thresholds once you understand your fleet's normal variance.
+</Tip>
